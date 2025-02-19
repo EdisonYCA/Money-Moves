@@ -12,7 +12,7 @@ export default function Navbar(){
 }
 
 const Nav = styled.nav`
-    background-color: #FF0000;
+    background-color:rgb(234, 0, 255);
     padding: 10px;
     text-align: right;
 `;
