@@ -8,11 +8,16 @@ export default function Home() {
       <Navbar/>
       <Main>
         <Section>
-          <Image src="/temp_money.jpg"/>
-          <EyeCatcherContainer>
-            <HeadLine>Your Money, Your Plan, Your Future.</HeadLine>
-            <HeadLineFollower>Through MoneyMoves you can track your spending, set goals, and make smarter financial decisions.</HeadLineFollower>
-          </EyeCatcherContainer>
+          <HeadLinerSpan>
+            <EyeCatcherContainer>
+              <HeadLine>Your Money, Your Plan, Your Future.</HeadLine>
+              <HeadLineFollower>Through MoneyMoves you can track your spending, set goals, and make smarter financial decisions.</HeadLineFollower>
+              <GetStartedBtn>Get Started</GetStartedBtn>
+            </EyeCatcherContainer>
+            <EyeCatcherPhoto>
+              <Image src="/temp_money.jpg"/>
+            </EyeCatcherPhoto>
+          </HeadLinerSpan>
         </Section>
         <Section>
             <p> Section 2 </p>
@@ -38,17 +43,24 @@ const Section = styled.section`
 const Image = styled.img`
   width: 100%;
   height: 100%;
-  position: absolute;
 `;
 
 const EyeCatcherContainer = styled.div`
   position: absolute;
-  background-color: blue;
   left: 5%;
   top: 10%;
   height: 80%;
   width: 400px;
   padding-left: 15px;
+`;
+
+const EyeCatcherPhoto = styled.div`
+  background-color: black;
+  left: 45%;
+  top: 10%;
+  height: 80%;
+  width: 600px;
+  position: absolute;
 `;
 
 const HeadLine = styled.h1`
@@ -58,3 +70,7 @@ const HeadLine = styled.h1`
 const HeadLineFollower = styled.p`
   color: white;
 `;
+
+const GetStartedBtn = styled.button``;
+
+const HeadLinerSpan = styled.span``;
