@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import Feature from './Feature';
+import { features } from './features';
 
 export default function Hero() {
+
   return (
     <>
       <Main>
@@ -18,7 +20,7 @@ export default function Hero() {
           </HeroSpan>
         </Section1>
         <Section2>
-            <Feature/>
+            <Feature logo={features[0][2]} feature={features[0][0]} description={features[0][1]} />
         </Section2>
         <Section3>
             <p> Section 3 </p>
@@ -43,7 +45,9 @@ const Section2 = styled.section`
   background-color: red; 
   height: 650px;
   position: relative;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Section3 = styled.section`
