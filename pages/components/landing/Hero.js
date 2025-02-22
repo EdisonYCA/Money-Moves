@@ -20,7 +20,9 @@ export default function Hero() {
           </HeroSpan>
         </Section1>
         <Section2>
-            <Feature logo={features[0][2]} feature={features[0][0]} description={features[0][1]} />
+            {features.map(([title, desc, logo], i) => {
+              return <Feature key={i} feature={title} description={desc} logo={logo}></Feature>
+            })}
         </Section2>
         <Section3>
             <p> Section 3 </p>

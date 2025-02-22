@@ -13,16 +13,21 @@ export default function Feature({logo, feature, description}){
 }
 
 const Logo = styled.img`
-    width: 20%;
-    height: 20%; 
-`;
+    width: 10%;
+    height: 10%; `;
 
 const Name = styled.h1``;
 
 const Description = styled.p``;
 
 const FeatureContainer = styled.div`
-    width: 350px;
-    height: 350px;
+    width: 300px;
+    height: 450px;
     background-color: white;
+    margin: 10px;
+    display: flex; 
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+    text-align: center; 
 `;
