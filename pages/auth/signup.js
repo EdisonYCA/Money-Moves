@@ -1,22 +1,31 @@
-import styled from "styled-components";
-import { MicrosoftLoginButton, GoogleLoginButton } from "react-social-login-buttons";
+import styled from "styled-components"
+import { MicrosoftLoginButton, GoogleLoginButton } from "react-social-login-buttons"
 import React, { useState } from 'react'
+import { auth } from '@/library/firebaseConfig.js'
+import { createUserWithEmailAndPassword } from "firebase/auth"
 
 export default function Signup(){
+    console.log(auth)
+    
     const [email, setUserEmail] = useState('');
-    const [validEmail, setValidEmail] = useState('');
+    const [password, setUserPassword] = useState('');
 
-    const validateUserEmail = (email) => {
-        const emailRegex = /^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-        if (emailRegex.test(email)){
-            return false
-        }
+    const createUser = (email, password) => {
+        createUserWithEmailAndPassword(auth, email, password).then(
+            (userCredential) => {
+                const user = userCredential.user;
+                console.log(`User ${user.email} signed up correctly`)
+            }
+        ).catch(
+            
+            (error) => {
+                const errorCode  = error.code
+                const errorMessage = error.message
+    
+                console.error(`Error ${errorCode}: ${errorMessage}`)
+            }
+        )
     }
-
-    const handleEmailChange = () => {
-        setValidEmail(validateUserEmail(email))
-    }
-
 
     return (
         <>
@@ -35,11 +44,10 @@ export default function Signup(){
                     </Divider>
                     <Form>
                         <Label>Your Email address</Label>
-                        <Input type="text" onChange={(e) => setUserEmail(e.target.value)}/>
-                        {validEmail && handleEmailChange(email)}
+                        <Input type="text" onChange={(e) => {setUserEmail(e.target.value)}}/>
                         <Label>Password</Label>
-                        <Input type="text"/>
-                        <SignUpBtn>Sign Up</SignUpBtn>
+                        <Input type="text" onChange={(p) => {setUserPassword(p.target.value)}}/>
+                        <SignUpBtn onClick={() => {createUser(email, password)}}>Sign Up</SignUpBtn>
                     </Form>
                 </SignUpContainter>
             </PageContainter>
