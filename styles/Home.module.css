@@ -1,0 +1,16 @@
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+  /* Remove default margin and padding from all elements */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Optional: Ensures padding and border are included in the element's total width/height */
+  }
+
+  body {
+    font-family: sans-serif; /* Optional: Sets a default font for the body */
+  }
+`;
+
+export default GlobalStyle;
