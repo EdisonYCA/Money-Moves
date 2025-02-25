@@ -48,7 +48,7 @@ const Main = styled.main`
 `;
 
 const Section1 = styled.section`
-  background-color: white; 
+  background-color: #FDFFFC; 
   height: 650px;
   position: relative;
 `;
@@ -63,7 +63,7 @@ const Section2 = styled.section`
 `;
 
 const Section3 = styled.section`
-  background-color: green; 
+  background-color: #FDFFFC; 
   height: 650px;
   position: relative;
   text-align: center;

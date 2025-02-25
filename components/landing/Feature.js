@@ -13,16 +13,22 @@ export default function Feature({logo, feature, description}){
 }
 
 const Logo = styled.img`
-    width: 10%;
-    height: 10%; `;
+    width: 80px;
+    height: 80px;
+`;
 
-const Name = styled.h1``;
+const Name = styled.h1`
+    margin-top: 40px;
+`;
 
-const Description = styled.p``;
+const Description = styled.p`
+    margin-top: 40px;
+    color: #2D3A3A;
+`;
 
 const FeatureContainer = styled.div`
-    width: 300px;
-    height: 450px;
+    width: 400px;
+    height: 400px;
     background-color: white;
     margin: 10px;
     display: flex; 
@@ -30,4 +36,14 @@ const FeatureContainer = styled.div`
     align-items: center; 
     justify-content: center;
     text-align: center; 
+    background-color: #FDFFFC; 
+    border-radius: 16px; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+    padding: 20px; /* Adds spacing inside */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+    }
 `;
