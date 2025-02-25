@@ -69,10 +69,9 @@ const Section3 = styled.section`
   text-align: center;
 `;
 
-const Image = styled.img`
+export const Image = styled.img`
   width: 100%;
   height: 100%;
-  background-color: white;
 `;
 
 const HeroContainer = styled.div`
@@ -83,9 +82,8 @@ const HeroContainer = styled.div`
   width: 400px;
 `;
 
-const HeroPhotoContainer = styled.div`
-  background-color: black;
-  left: 45%;
+export const HeroPhotoContainer = styled.div`
+  left: ${props => props.signup ? '0' : '45%'};
   top: 10%;
   height: 80%;
   width: 700px;
@@ -104,15 +102,15 @@ const HeroSubtitle = styled.p`
   margin-bottom: 20px;
 `;
 
-const SpanYourMoney = styled.span`
-  margin-right: 15px;
+export const SpanYourMoney = styled.span`
+  margin-right: ${props => props.signup ? '5px' : '15px'};
 `;
-const SpanYourPlan = styled.span`
-color: #2D3A3A;
-margin-right: 15px;
+export const SpanYourPlan = styled.span`
+  color: #2D3A3A;
+  margin-right: ${props => props.signup ? '5px' : '15px'};
 `;
-const SpanYourFuture = styled.span`
-color: #248232;
+export const SpanYourFuture = styled.span`
+  color: #248232;
 `;
 const GetStartedBtn = styled.button`
   color: white;
