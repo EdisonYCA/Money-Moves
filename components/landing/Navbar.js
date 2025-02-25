@@ -13,10 +13,10 @@ export default function Navbar({dashboard}){
                 </>
             ) : 
             (   <>
-                    <ButtonLink href="/dashboard"></ButtonLink>
+                    <ButtonLink href="/dashboard">Dashboard</ButtonLink>
                     <ButtonLink href="#blog">Blog</ButtonLink>
                     <ButtonLink href="/auth/login">Login</ButtonLink>
-                    <ButtonLink href="/auth/signup">Sign Up</ButtonLink>
+                    <SignUpLink href="/auth/signup">Sign Up</SignUpLink>
                 </>
             )
             }
@@ -25,20 +25,39 @@ export default function Navbar({dashboard}){
 }
 
 const NavLinks = styled.nav`
-    background-color: #3F6C51;
+    background-color: white;
     padding: 13px;
     padding-left: 0px;
-    text-align: ${({dashboard}) => (dashboard ? 'right': 'left')};
-    box-shadow: 0px 10px 15px hsla(0, 0.00%, 0.00%, 0.46);
+    text-align: ${({dashboard}) => (dashboard ? 'left': 'right')};
+    position: absolute; 
+    z-index: 1;
+    width: 100%;
+    margin: 0px auto;
 `;
 
 const ButtonLink = styled(Link) `
-    color: white;
+    color: black;
     text-align: center;
     padding: 13px 16px;
     text-decoration: none;
-    &:hover{
-            background-color: #4a4a4a;
+      
+    &:hover {
+        background-color: #1d6829;
+        transform: scale(1.05);
+        color: white;
+    }
+`;
+
+const SignUpLink = styled(Link) `
+    color: black;
+    text-align: center;
+    padding: 13px 16px;
+    text-decoration: none;
+      
+    &:hover {
+        background-color: #1d6829;
+        transform: scale(1.05);
+        color: white;
     }
 `;
 

@@ -10,12 +10,22 @@ export default function Hero() {
         <Section1>
           <HeroSpan>
             <HeroContainer>
-              <HeroTitle>Your Money, Your Plan, Your Future.</HeroTitle>
+              <HeroTitle>
+                <SpanYourMoney>
+                Your Money, 
+                </SpanYourMoney>
+                <SpanYourPlan>
+                Your Plan, 
+                </SpanYourPlan>
+                <SpanYourFuture>
+                  Your Future.
+                </SpanYourFuture>
+                </HeroTitle>
               <HeroSubtitle>Through MoneyMoves you can track your spending, set goals, and make smarter financial decisions.</HeroSubtitle>
               <GetStartedBtn>Get Started</GetStartedBtn>
             </HeroContainer>
             <HeroPhotoContainer>
-              <Image src="/temp_money.jpg"/>
+              <Image src="/dddynamite.svg"/>
             </HeroPhotoContainer>
           </HeroSpan>
         </Section1>
@@ -38,13 +48,13 @@ const Main = styled.main`
 `;
 
 const Section1 = styled.section`
-  background-color: blue; 
+  background-color: white; 
   height: 650px;
   position: relative;
 `;
 
 const Section2 = styled.section`
-  background-color: red; 
+  background-color: #2AA84A; 
   height: 650px;
   position: relative;
   display: flex;
@@ -62,6 +72,7 @@ const Section3 = styled.section`
 const Image = styled.img`
   width: 100%;
   height: 100%;
+  background-color: white;
 `;
 
 const HeroContainer = styled.div`
@@ -82,15 +93,45 @@ const HeroPhotoContainer = styled.div`
 `;
 
 const HeroTitle = styled.h1`
-  color: white;
+  color: black;
   font-size: 3rem;
+  margin-bottom: 10px;
 `;
 
 const HeroSubtitle = styled.p`
-  color: white;
-  font-size: 1.25rem;
+  color: #2D3A3A;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
 `;
 
-const GetStartedBtn = styled.button``;
+const SpanYourMoney = styled.span`
+  margin-right: 15px;
+`;
+const SpanYourPlan = styled.span`
+color: #2D3A3A;
+margin-right: 15px;
+`;
+const SpanYourFuture = styled.span`
+color: #248232;
+`;
+const GetStartedBtn = styled.button`
+  color: white;
+  background-color: #248232;
+  width: 120px;
+  height: 40px;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  
+  &:hover {
+    background-color: #1d6829;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+`;
 
 const HeroSpan = styled.span``;
