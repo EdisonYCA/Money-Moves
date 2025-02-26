@@ -1,34 +1,37 @@
 import styled from "styled-components"
 import { MicrosoftLoginButton, GoogleLoginButton } from "react-social-login-buttons"
 import React, { useState } from 'react'
-import { auth } from '@/library/firebaseConfig.js'
-import { createUserWithEmailAndPassword } from "firebase/auth"
 import { HeroPhotoContainer, Image, SpanYourMoney as SpanMake, SpanYourFuture as SpanMove, SpanYourPlan
     as SpanYour
- } from "@/components/landing/Hero";
+ } from "@/components/Landing/Hero";
+import { registerUser } from "@/backend/Auth";
+import { useRouter } from "next/router";
 
-export default function Signup(){
-    console.log(auth)
-    
+export default function Signup(){    
     const [email, setUserEmail] = useState('');
     const [password, setUserPassword] = useState('');
+    const router = useRouter();
 
-    const createUser = (email, password) => {
-        createUserWithEmailAndPassword(auth, email, password).then(
-            (userCredential) => {
-                const user = userCredential.user;
-                console.log(`User ${user.email} signed up correctly`)
-            }
-        ).catch(
-            
-            (error) => {
-                const errorCode  = error.code
-                const errorMessage = error.message
-    
-                console.error(`Error ${errorCode}: ${errorMessage}`)
-            }
-        )
+    const validateEmail = () => {
+        const emailRegex = /^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+        if (!emailRegex.test(email)){
+            return false
+        }
     }
+
+    async function handleSignUp() {
+        if (!validateEmail || password.length === 0){
+            null;
+            // change styles or something
+        }
+        
+        try {
+            await registerUser(email, password)
+            router.push("/dashboard")
+        } catch (err) {
+            console.log('Error Signing Up', err)
+        }
+    }   
 
     return (
         <>
@@ -62,13 +65,13 @@ export default function Signup(){
                     <Form>
                         <InputContainer>
                             <Icon src="/profile-2.svg"></Icon>
-                            <Input type="text" placeholder="Enter your Email" onChange={(e) => {setUserEmail(e.target.value)}}/>
+                            <Input type="text" placeholder="Enter your Email" required onChange={(e) => {setUserEmail(e.target.value)}}/>
                         </InputContainer>
                         <InputContainer>
                             <Icon src="/lock-2.svg"></Icon>
-                            <Input type="text" placeholder="Enter your Password" onChange={(p) => {setUserPassword(p.target.value)}}/>
+                            <Input type="text" placeholder="Enter your Password" required onChange={(p) => {setUserPassword(p.target.value)}}/>
                         </InputContainer>
-                        <SignUpBtn onClick={() => {createUser(email, password)}}>Sign Up</SignUpBtn>
+                        <SignUpBtn onClick={handleSignUp}>Sign Up</SignUpBtn>
                     </Form>
                 </SignUpContainter>
             </PageContainter>
@@ -221,4 +224,16 @@ const DisplayContainer = styled.div`
     height: 100%;
 `;
 
-const InvalidEmailText = styled.p``;
+const InvalidText = styled.p`
+    color: #ff4d4d; 
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 5px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+
+    &.visible {
+        opacity: 1;
+    }
+`;

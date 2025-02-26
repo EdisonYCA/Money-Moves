@@ -1,0 +1,27 @@
+<svg version="1.1" id="vis_p1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 1280 1024" style="enable-background:new 0 0 1280 1024" xml:space="preserve">
+  <style>
+    #vis_p1 .st0{fill:#000000;}
+    #vis_p1 .st1{fill:#248232;}
+    #vis_p1 .st2{fill:#2AA84A;}
+    #vis_p1 .st3{fill:#2D3A3A;}
+    #vis_p1 .st4{fill:#FDFFFC;}
+  </style>
+  <path class="st0" d="M0 0h918.9v183.8H0z"></path>
+  <path class="st1" d="M86 183.8H0V0h86l97.8 91.9z"></path>
+  <path class="st2" d="M269.8 183.8h-86V0h86l97.8 91.9z"></path>
+  <path class="st3" d="M453.5 183.8h-85.9V0h85.9l97.8 91.9z"></path>
+  <circle class="st4" cx="643.2" cy="91.9" r="91.9"></circle>
+  <circle class="st0" cx="643.2" cy="91.9" r="38.2"></circle>
+  <circle class="st1" cx="827" cy="91.9" r="91.9"></circle>
+  <circle class="st2" cx="827" cy="91.9" r="38.2"></circle>
+  <path class="st3" d="M918.9 0h51.6v183.8h-51.6z"></path>
+  <path class="st4" d="M970.5 0h51.6v183.8h-51.6z"></path>
+  <path class="st0" d="M1022.1 0h51.6v183.8h-51.6z"></path>
+  <path class="st1" d="M1073.7 0h51.6v183.8h-51.6z"></path>
+  <path class="st2" d="M1125.2 0h51.6v183.8h-51.6z"></path>
+  <path class="st3" d="M1176.8 0h51.6v183.8h-51.6z"></path>
+  <circle class="st4" cx="744.5" cy="432.6" r="76.5"></circle>
+  <circle class="st0" cx="897.7" cy="432.6" r="76.5"></circle>
+  <circle class="st1" cx="1050.7" cy="432.6" r="76.5"></circle>
+  <circle class="st2" cx="1203.9" cy="432.6" r="76.5"></circle>
+</svg>

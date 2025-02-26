@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import Feature from './Feature';
-import { features } from './features';
+import {heroFeatureData} from '@/library/heroFeatureData';
+import Feature from '@/components/Landing/Feature';
 
 export default function Hero() {
 
@@ -30,7 +30,7 @@ export default function Hero() {
           </HeroSpan>
         </Section1>
         <Section2>
-            {features.map(([title, desc, logo], i) => {
+            {heroFeatureData.map(([title, desc, logo], i) => {
               return <Feature key={i} feature={title} description={desc} logo={logo}></Feature>
             })}
         </Section2>

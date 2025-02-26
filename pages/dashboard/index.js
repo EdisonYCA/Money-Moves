@@ -1,10 +1,15 @@
 import DashNavBar from "@/components/Dashboard/NavBar";
 import styled from "styled-components";
 import { BarChart } from "@/components/Graphs/Bar";
+import {SideNavBar} from "@/components/Dashboard/SideNavBar";
+
 export default function Dashboard() {
   return (
     <PageContainer>
-      <NavigationPanel></NavigationPanel>
+      <NavigationPanel>
+          <Image src="/dashboard_dddynamite.svg"/>
+          <NavigationHeader>MoneyMoves</NavigationHeader>
+      </NavigationPanel>
 
       <MainContentContainer>
         <DashNavBar />
@@ -63,6 +68,12 @@ export default function Dashboard() {
   );
 }
 
+
+export const Image = styled.img`
+  width: 150px;
+  height: 120px;
+`;
+
 const PageContainer = styled.div`
   width: 100vw;
   height: 100vh;
@@ -75,6 +86,13 @@ const NavigationPanel = styled.div`
   height: 100%;
   background-color: #000000;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const NavigationHeader = styled.h1`
+  color: #f0f0f0;
+  font-size: 1.7rem;
 `;
 
 const MainContentContainer = styled.div`
