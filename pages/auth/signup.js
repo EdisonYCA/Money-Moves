@@ -49,7 +49,7 @@ export default function Signup(){
         <>
             <PageContainter>
                 <DisplayContainer>
-                    <HeroPhotoContainer $signup>
+                    <HeroPhotoContainer signup>
                         <Image src="/dddynamite_signup.svg"/>
                     </HeroPhotoContainer>
                 </DisplayContainer>

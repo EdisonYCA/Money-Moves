@@ -1,5 +1,11 @@
+import {  } from "react";
+
 export default function income(){
+    
+
     return (
-        <><p>Income</p></>
+        <>
+            <button>Add Account</button>
+        </>
     );
 }

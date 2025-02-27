@@ -1,40 +1,19 @@
 import styled from "styled-components";
-import Link from "next/link";
+import { sideNavBarData } from "@/library/sideNavbarData";
+import ButtonLink from "./ButtonLink";
 
 export default function SideNavBar() {
   return (
     <NavLinks>
-        <ButtonLink href="/dashboard/statistics">Spending</ButtonLink>
+      {sideNavBarData.map(([icon, text, href], i) => {
+        return <ButtonLink icon={icon} text={text} href={href} key={i}/>
+      })}
     </NavLinks>
   );
 }
 
 const NavLinks = styled.nav`
-  background-color: white;
+  margin-top: 50px;
+  display: block;
 `;
 
-const ButtonLink = styled(Link)`
-  color: black;
-  text-align: center;
-  padding: 13px 16px;
-  text-decoration: none;
-
-  &:hover {
-    background-color: #1d6829;
-    transform: scale(1.05);
-    color: white;
-  }
-`;
-
-const SignUpLink = styled(Link)`
-  color: black;
-  text-align: center;
-  padding: 13px 16px;
-  text-decoration: none;
-
-  &:hover {
-    background-color: #1d6829;
-    transform: scale(1.05);
-    color: white;
-  }
-`;

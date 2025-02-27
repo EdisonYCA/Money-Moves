@@ -1,7 +1,7 @@
 import DashNavBar from "@/components/Dashboard/NavBar";
 import styled from "styled-components";
 import { BarChart } from "@/components/Graphs/Bar";
-import {SideNavBar} from "@/components/Dashboard/SideNavBar";
+import SideNavBar from "@/components/Dashboard/SideNavBar";
 import {useRouter} from "next/router";
 import { useStateContext } from "@/context/StateContext";
 import { useEffect } from "react";
@@ -22,6 +22,7 @@ export default function Dashboard() {
       <NavigationPanel>
           <Image src="/dashboard_dddynamite.svg"/>
           <NavigationHeader>MoneyMoves</NavigationHeader>
+          <SideNavBar/>
       </NavigationPanel>
 
       <MainContentContainer>
