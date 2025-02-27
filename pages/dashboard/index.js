@@ -2,8 +2,21 @@ import DashNavBar from "@/components/Dashboard/NavBar";
 import styled from "styled-components";
 import { BarChart } from "@/components/Graphs/Bar";
 import {SideNavBar} from "@/components/Dashboard/SideNavBar";
+import {useRouter} from "next/router";
+import { useStateContext } from "@/context/StateContext";
+import { useEffect } from "react";
 
 export default function Dashboard() {
+
+  const { user } = useStateContext();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user){
+      router.push('/')
+    }
+  }, [user])
+
   return (
     <PageContainer>
       <NavigationPanel>
@@ -45,25 +58,6 @@ export default function Dashboard() {
         <InvestmentsAndBills>
         </InvestmentsAndBills>
       </MainContentContainer>
-      {/* <Navbar dashboard={true}></Navbar>
-      <PaycheckContainer>
-        <ExpenseContainer>
-          <ExpenseHeader>$4,0000</ExpenseHeader>
-          <ExpenseText>TOTAL INCOME</ExpenseText>
-        </ExpenseContainer>
-        <ExpenseContainer>
-          <ExpenseHeader expense>$3,0000</ExpenseHeader>
-          <ExpenseText>TOTAL EXPENSES</ExpenseText>
-        </ExpenseContainer>
-        <ExpenseContainer>
-          <ExpenseHeader>$1,0000</ExpenseHeader>
-          <ExpenseText>NET INCOME</ExpenseText>
-        </ExpenseContainer>
-      </PaycheckContainer>
-      <BarChartContainer>
-        <BarChart/>
-      </BarChartContainer>
-*/}
     </PageContainer>
   );
 }

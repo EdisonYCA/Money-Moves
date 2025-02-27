@@ -4,12 +4,15 @@ import React, { useState } from 'react'
 import { HeroPhotoContainer, Image, SpanYourMoney as SpanMake, SpanYourFuture as SpanMove, SpanYourPlan
     as SpanYour
  } from "@/components/Landing/Hero";
-import { registerUser } from "@/backend/Auth";
+import { registerUser, logUserInGoogle } from "@/backend/Auth";
 import { useRouter } from "next/router";
+import { useStateContext } from "@/context/StateContext";
 
 export default function Signup(){    
     const [email, setUserEmail] = useState('');
     const [password, setUserPassword] = useState('');
+    const {setUser} = useStateContext();
+
     const router = useRouter();
 
     const validateEmail = () => {
@@ -26,7 +29,16 @@ export default function Signup(){
         }
         
         try {
-            await registerUser(email, password)
+            await registerUser(email, password, setUser)
+            router.push("/dashboard")
+        } catch (err) {
+            console.log('Error Signing Up', err)
+        }
+    }   
+
+    async function handleGoogleSignUp() {
+        try {
+            await logUserInGoogle(setUser);
             router.push("/dashboard")
         } catch (err) {
             console.log('Error Signing Up', err)
@@ -37,7 +49,7 @@ export default function Signup(){
         <>
             <PageContainter>
                 <DisplayContainer>
-                    <HeroPhotoContainer signup>
+                    <HeroPhotoContainer $signup>
                         <Image src="/dddynamite_signup.svg"/>
                     </HeroPhotoContainer>
                 </DisplayContainer>
@@ -53,7 +65,7 @@ export default function Signup(){
                             Move.
                         </SpanMove>
                     </Header>
-                    <StyledGoogledButton />
+                    <StyledGoogledButton onClick={handleGoogleSignUp}/>
                     <StyledMicrosoftButton />
                     <Divider>
                         <Line>

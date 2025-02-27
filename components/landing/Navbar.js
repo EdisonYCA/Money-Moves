@@ -1,66 +1,87 @@
-import styled from 'styled-components';
-import Link from 'next/link';
+import styled from "styled-components";
+import Link from "next/link";
+import { useStateContext } from "@/context/StateContext";
+import { useRouter } from "next/router";
 
-export default function Navbar({dashboard}){
-    return(
-        <NavLinks>
-            {dashboard ? (
-                <>
-                    <ButtonLink href="/dashboard/statistics">Spending</ButtonLink>
-                    <ButtonLink href="/dashboard/profile">Profile</ButtonLink>
-                    <ButtonLink href="/dashboard/income">Income</ButtonLink>
-                    <ButtonLink href="/dashboard/expenses">Expenses</ButtonLink>
-                </>
-            ) : 
-            (   <>
-                    <ButtonLink href="/dashboard">Dashboard</ButtonLink>
-                    <ButtonLink href="#blog">Blog</ButtonLink>
-                    <ButtonLink href="/auth/login">Login</ButtonLink>
-                    <SignUpLink href="/auth/signup">Sign Up</SignUpLink>
-                </>
-            )
-            }
-        </NavLinks>
-    );
+
+export default function Navbar() {
+  const { user, setUser } = useStateContext();
+  const router = useRouter();
+
+  const logOut = (e) => {
+    e.preventDefault();
+    setUser(null);
+    router.push("/");
+  }
+
+  return (
+    <NavLinks>
+      <>
+        {user && <ButtonLink href="/dashboard">Dashboard</ButtonLink>}
+        <ButtonLink href="#blog">Blogs</ButtonLink>
+        {user ? (<LogOut onClick={logOut}>Log Out</LogOut>)
+            :
+            <>
+                <ButtonLink href="/auth/login">Log In</ButtonLink>
+                <SignUpLink href="/auth/signup">Sign Up</SignUpLink>
+            </>
+        }
+      </>
+    </NavLinks>
+  );
 }
 
 const NavLinks = styled.nav`
-    background-color: white;
-    padding: 13px;
-    padding-left: 0px;
-    text-align: ${({dashboard}) => (dashboard ? 'left': 'right')};
-    position: absolute; 
-    z-index: 1;
-    width: 100%;
-    margin: 0px auto;
+  background-color: white;
+  padding: 13px;
+  padding-left: 0px;
+  text-align: right;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  margin: 0px auto;
 `;
 
-const ButtonLink = styled(Link) `
-    color: black;
-    text-align: center;
-    padding: 13px 16px;
-    text-decoration: none;
-      
-    &:hover {
-        background-color: #1d6829;
-        transform: scale(1.05);
-        color: white;
-    }
+const ButtonLink = styled(Link)`
+  color: black;
+  text-align: center;
+  padding: 13px 16px;
+  text-decoration: none;
+
+  &:hover {
+    background-color: #1d6829;
+    transform: scale(1.05);
+    color: white;
+  }
 `;
 
-const SignUpLink = styled(Link) `
-    color: black;
-    text-align: center;
-    padding: 13px 16px;
-    text-decoration: none;
-      
-    &:hover {
-        background-color: #1d6829;
-        transform: scale(1.05);
-        color: white;
-    }
+const LogOut = styled.a`
+  color: black;
+  text-align: center;
+  padding: 13px 16px;
+  text-decoration: none;
+
+  &:hover {
+    background-color: #1d6829;
+    transform: scale(1.05);
+    color: white;
+  }
 `;
 
-const Button = styled.button `
-    margin-right: 20px;
+
+const SignUpLink = styled(Link)`
+  color: black;
+  text-align: center;
+  padding: 13px 16px;
+  text-decoration: none;
+
+  &:hover {
+    background-color: #1d6829;
+    transform: scale(1.05);
+    color: white;
+  }
+`;
+
+const Button = styled.button`
+  margin-right: 20px;
 `;

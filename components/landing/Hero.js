@@ -83,7 +83,7 @@ const HeroContainer = styled.div`
 `;
 
 export const HeroPhotoContainer = styled.div`
-  left: ${props => props.signup ? '0' : '45%'};
+  left: ${props => props.$signup ? '0' : '45%'};
   top: 10%;
   height: 80%;
   width: 700px;
