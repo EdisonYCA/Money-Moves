@@ -1,4 +1,5 @@
-import {client, PLAID_COUNTRY_CODES, PLAID_PRODUCTS} from '@/library/plaid';
+import { client } from '@/library/plaid';
+import { addDataToFirestore } from '@/backend/Database';
 
 export default async function handler(req, res){
     const PUBLIC_TOKEN = req.body.public_token
@@ -8,11 +9,19 @@ export default async function handler(req, res){
             public_token: PUBLIC_TOKEN
         })
         
-        // TODO: put this in firebase
         const ACCESS_TOKEN = response.data.access_token;
+        const ITEM_ID = response.data.item_id;
 
-        res.status(200).json(response.data)
+        // addDataToFirestore({
+        //     "access_tokens": [[ACCESS_TOKEN, ITEM_ID]]
+        // })
+
+        await addDataToFirestore ({
+            "Test": ["Hello"]
+        })
+
+        res.status(200)
     } catch(err){
-        res.status(500).json({error: 'Failed to create link token'})
+        res.status(500)
     }
 }
