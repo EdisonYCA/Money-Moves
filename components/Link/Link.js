@@ -1,5 +1,10 @@
 import { usePlaidLink } from "react-plaid-link";
-export default function Link({ linkToken }) {
+import { useStateContext } from "@/context/StateContext";
+import styled from "styled-components";
+
+export default function Link() {
+  const { linkToken } = useStateContext();
+  
   const onSuccess = (public_token) => {
     const exchangePublicTokenForAccessToken = async () => {
       try {
@@ -33,13 +38,38 @@ export default function Link({ linkToken }) {
   const { open, ready } = usePlaidLink(config);
 
   return (
-    <button
-      onClick={() => {
-        open();
-      }}
+    <ButtonContainer>
+      <AddAccount onClick={() => {
+open()}}
       disabled={!ready}
     >
-      Open
-    </button>
+      Add Account
+    </AddAccount>
+    </ButtonContainer>
   );
 }
+
+const ButtonContainer = styled.div`
+  margin-top: 15px;
+  width: 100%;
+`;
+
+const AddAccount = styled.button`
+  color: white;
+  background-color: #248232;
+  width: 120px;
+  height: 40px;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  
+  &:hover {
+    background-color: #1d6829;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+`;
