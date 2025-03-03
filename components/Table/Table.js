@@ -4,9 +4,14 @@ import Link from "../Link/Link";
 export default function Table() {
   const headers = [
     { id: 1, label: "Account" },
-    { id: 2, label: "Balance" },
-    { id: 3, label: "Account Number" },
+    { id: 2, label: "Type" },
+    { id: 3, label: "Balance" },
   ];
+
+  const accounts = async () => {
+    null;
+  }
+
 
   return (
     <PageContainer>

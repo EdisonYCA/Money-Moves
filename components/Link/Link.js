@@ -3,15 +3,17 @@ import { useStateContext } from "@/context/StateContext";
 import styled from "styled-components";
 
 export default function Link() {
-  const { linkToken } = useStateContext();
+  const { linkToken, user } = useStateContext();
   
   const onSuccess = (public_token) => {
+    const userId = user.uid
+
     const exchangePublicTokenForAccessToken = async () => {
       try {
         const response = await fetch("/api/createAccessToken", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ public_token }),
+          body: JSON.stringify({ "public_token": public_token, "userID": userId }),
         });
 
         if (response.ok) {
