@@ -1,6 +1,6 @@
 export const sideNavBarData = [
     ["/blockchain-3.svg", "Overview", "#dashboard"],
-    ["/credit-card.svg", "Transactions", "#transactions"],
+    ["/credit-card.svg", "Transactions", "/dashboard/transactions"],
     ["/chart-bar-trend-up.svg", "Reports", "#reports"],
     ["/wallet-2.svg", "Accounts", "/dashboard/income"],
     ["/credit-card.svg", "Expenses", "#expenses"],

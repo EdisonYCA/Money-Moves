@@ -1,68 +1,75 @@
-import DashNavBar from "@/components/Dashboard/NavBar";
 import styled from "styled-components";
 import { BarChart } from "@/components/Graphs/Bar";
 import SideNavBar from "@/components/Dashboard/SideNavBar";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import { useStateContext } from "@/context/StateContext";
 import { useEffect } from "react";
 import { Title } from "chart.js";
+import TransactionTable from "@/components/Table/TransactionTable";
 
 export default function Dashboard() {
-
   const { user } = useStateContext();
   const router = useRouter();
 
   useEffect(() => {
-    if (!user){
-      router.push('/')
+    if (!user) {
+      router.push("/");
     }
-  }, [user])
+  }, [user]);
 
   const expenseContainerData = [
     ["#1d6829", "Monthly Income", "$4.1k"],
     ["#2AA84A", "Monthly Expenses", "2k"],
     ["#2D3A3A", "Net Income", "$1.1k"],
-    ["black", "Savings Rate", "3.2%"]
-  ]
+    ["black", "Savings Rate", "3.2%"],
+  ];
 
   return (
     <PageContainer>
       <NavigationPanel>
-          <Image src="/dashboard_dddynamite.svg"/>
-          <NavigationHeader>MoneyMoves</NavigationHeader>
-          <SideNavBar/>
+        <Image src="/dashboard_dddynamite.svg" />
+        <NavigationHeader>MoneyMoves</NavigationHeader>
+        <SideNavBar />
       </NavigationPanel>
 
       <MainContentContainer>
-        <DashNavBar />
         <MoneyOverview>
-          {
-            expenseContainerData.map(([color, title, amount], i) => (
-              <ExpenseContainer key={i} color={color}>
-                <ExpenseText>{title}</ExpenseText>
-                <ExpenseHeader>{amount}</ExpenseHeader>
-              </ExpenseContainer>
-            ))
-          }
+          {expenseContainerData.map(([color, title, amount], i) => (
+            <ExpenseContainer key={i} color={color}>
+              <ExpenseText>{title}</ExpenseText>
+              <ExpenseHeader>{amount}</ExpenseHeader>
+            </ExpenseContainer>
+          ))}
         </MoneyOverview>
         <TransactionsAnalytics>
           <GraphContainer>
-            <BarChart/>
+            <BarChart />
           </GraphContainer>
-          <PieContainer>
-            
-          </PieContainer>
+          <PieContainer></PieContainer>
           <TransactionsContainer>
-
+            <HeaderContainer>
+              <Header>Transactions</Header>
+            </HeaderContainer>
+            <TransactionTable />
+            <ButtonContainer>
+              <AddAccount onClick={() => {router.push('/dashboard/transactions')}}>View All Transactions</AddAccount>
+            </ButtonContainer>
           </TransactionsContainer>
         </TransactionsAnalytics>
-        <InvestmentsAndBills>
-        </InvestmentsAndBills>
+        <InvestmentsAndBills></InvestmentsAndBills>
       </MainContentContainer>
     </PageContainer>
   );
 }
 
+const HeaderContainer = styled.div`
+  padding: 10px;
+`;
+
+const Header = styled.h1`
+  font-size: 20px;
+  color: black;
+`;
 
 export const Image = styled.img`
   width: 150px;
@@ -104,22 +111,22 @@ const MoneyOverview = styled.div`
   justify-content: center;
   align-items: center;
   gap: 25px;
-  padding-top: 80px;
+  margin: 20px 0 20px 0;
 `;
 
 const ExpenseContainer = styled.div`
   width: 210px; /* Increased for better visibility */
   height: 100px;
-  background-color: ${props => props.color ? props.color : 'white'};
+  background-color: ${(props) => (props.color ? props.color : "white")};
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   justify-content: center;
   padding: 10px;
-  border-radius: 16px; 
+  border-radius: 16px;
 
   &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
   }
 `;
 
@@ -134,12 +141,12 @@ const TransactionsAnalytics = styled.div`
 `;
 
 const GraphContainer = styled.div`
-  width: 48%;
+  width: 50%;
   height: 100%;
   display: flex;
   background-color: white;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border-radius: 16px; 
+  border-radius: 16px;
 `;
 
 const PieContainer = styled.div`
@@ -152,8 +159,10 @@ const PieContainer = styled.div`
 const TransactionsContainer = styled.div`
   width: 25%;
   height: 100%;
+  margin-right: 40px;
   display: flex;
-  background-color: black;
+  flex-direction: column;
+  background-color: white;
 `;
 
 const InvestmentsAndBills = styled.div`
@@ -185,13 +194,40 @@ const Bills = styled.div`
   justify-content: center;
 `;
 
-
 const ExpenseHeader = styled.p`
-  color: ${props => props.color ? props.color : 'white'};
+  color: ${(props) => (props.color ? props.color : "white")};
   font-size: 2.5rem;
   margin-top: 20px;
 `;
 
 const ExpenseText = styled.p`
-  color: ${props => props.color ? props.color : 'white'};
+  color: ${(props) => (props.color ? props.color : "white")};
+`;
+
+const ButtonContainer = styled.div`
+  margin: 20px 0 10px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const AddAccount = styled.button`
+  color: white;
+  background-color: #248232;
+  width: 70%;
+  height: 40px;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: #1d6829;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 `;
