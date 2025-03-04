@@ -5,6 +5,7 @@ import SideNavBar from "@/components/Dashboard/SideNavBar";
 import {useRouter} from "next/router";
 import { useStateContext } from "@/context/StateContext";
 import { useEffect } from "react";
+import { Title } from "chart.js";
 
 export default function Dashboard() {
 
@@ -17,6 +18,13 @@ export default function Dashboard() {
     }
   }, [user])
 
+  const expenseContainerData = [
+    ["#1d6829", "Monthly Income", "$4.1k"],
+    ["#2AA84A", "Monthly Expenses", "2k"],
+    ["#2D3A3A", "Net Income", "$1.1k"],
+    ["black", "Savings Rate", "3.2%"]
+  ]
+
   return (
     <PageContainer>
       <NavigationPanel>
@@ -28,22 +36,14 @@ export default function Dashboard() {
       <MainContentContainer>
         <DashNavBar />
         <MoneyOverview>
-          <ExpenseContainer color="#1d6829">
-            <ExpenseText>Monthly Income</ExpenseText>
-            <ExpenseHeader>$4.1k</ExpenseHeader>
-          </ExpenseContainer>
-          <ExpenseContainer color="#2AA84A">
-            <ExpenseText>Monthly Expenses</ExpenseText>
-            <ExpenseHeader>$2k</ExpenseHeader>
-          </ExpenseContainer>
-          <ExpenseContainer color="#2D3A3A">
-            <ExpenseText>Net Income</ExpenseText>
-            <ExpenseHeader>$1.1k</ExpenseHeader>
-          </ExpenseContainer>
-          <ExpenseContainer>
-            <ExpenseText color="black">Savings Rate</ExpenseText>
-            <ExpenseHeader color="black">3.2%</ExpenseHeader>  
-          </ExpenseContainer>
+          {
+            expenseContainerData.map(([color, title, amount], i) => (
+              <ExpenseContainer key={i} color={color}>
+                <ExpenseText>{title}</ExpenseText>
+                <ExpenseHeader>{amount}</ExpenseHeader>
+              </ExpenseContainer>
+            ))
+          }
         </MoneyOverview>
         <TransactionsAnalytics>
           <GraphContainer>
