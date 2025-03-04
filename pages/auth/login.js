@@ -1,7 +1,7 @@
 import styled from "styled-components"
-import { MicrosoftLoginButton, GoogleLoginButton } from "react-social-login-buttons"
+import { GoogleLoginButton } from "react-social-login-buttons"
 import React, { useState } from 'react'
-import { HeroPhotoContainer, Image, SpanYourMoney as SpanMake, SpanYourFuture as SpanMove, SpanYourPlan
+import { Image, SpanYourMoney as SpanMake, SpanYourFuture as SpanMove, SpanYourPlan
     as SpanYour
  } from "@/components/Landing/Hero";
 import { logUserIn, logUserInGoogle} from "@/backend/Auth";
@@ -15,19 +15,7 @@ export default function login(){
     
         const router = useRouter();
     
-        const validateEmail = () => {
-            const emailRegex = /^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-            if (!emailRegex.test(email)){
-                return false
-            }
-        }
-    
         async function handleLogIn() {
-            if (!validateEmail || password.length === 0){
-                null;
-                // change styles or something
-            }
-            
             try {
                 await logUserIn(email, password, setUser)
                 router.push("/dashboard")
@@ -49,16 +37,14 @@ export default function login(){
             <>
                 <PageContainter>
                     <DisplayContainer>
-                        <HeroPhotoContainer signup>
-                            <Image src="/dddynamite_signup.svg"/>
-                        </HeroPhotoContainer>
+                        <Image src="/dddynamite_signup.svg"/>
                     </DisplayContainer>
                     <SignUpContainter>
                         <Header>
-                            <SpanMake signup>
+                            <SpanMake $signup>
                                 Make
                             </SpanMake>
-                            <SpanYour signup>
+                            <SpanYour $signup>
                                 Your
                             </SpanYour>
                             <SpanMove>
@@ -66,7 +52,6 @@ export default function login(){
                             </SpanMove>
                         </Header>
                         <StyledGoogledButton onClick={googleLogIn} />
-                        <StyledMicrosoftButton />
                         <Divider>
                             <Line>
                             </Line>
@@ -80,7 +65,7 @@ export default function login(){
                                 <Input type="text" placeholder="Enter your Email" required onChange={(e) => {setUserEmail(e.target.value)}}/>
                             </InputContainer>
                             <InputContainer>
-                                <Icon src="/lock-2.svg"></Icon>
+                                <Icon src="/48-lock-2.svg"></Icon>
                                 <Input type="text" placeholder="Enter your Password" required onChange={(p) => {setUserPassword(p.target.value)}}/>
                             </InputContainer>
                             <SignUpBtn onClick={handleLogIn}>Log In</SignUpBtn>
@@ -135,17 +120,6 @@ const StyledGoogledButton = styled(GoogleLoginButton)`
     padding: 12px !important;
 `;
 
-const StyledMicrosoftButton = styled(MicrosoftLoginButton)`
-    background-color: #000000 !important;
-    color: white !important;
-    width: 349px !important;
-    height: 40px !important;
-    font-size: 16px !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    padding: 12px !important;
-`;
-
 const Header = styled.h1`
     font-size: 2.5rem;
 `;
@@ -192,17 +166,8 @@ const Input = styled.input`
     }
 `;
 
-const Label = styled.label`
-    font-size: 16px;
-    font-weight: bold;
-    color: #2D3A3A;
-    margin-top: 30px;
-    margin-bottom: 6px;
-    display: block;
-`;
-
 const Divider = styled.div`
-    width: 65%;
+    width: 400px;
     height: 40px;
     background-color: white;
     display: flex;
@@ -234,18 +199,4 @@ const DisplayContainer = styled.div`
     background-color: #2AA84A;
     width: 55%;
     height: 100%;
-`;
-
-const InvalidText = styled.p`
-    color: #ff4d4d; 
-    font-size: 14px;
-    font-weight: bold;
-    margin-top: 5px;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-
-    &.visible {
-        opacity: 1;
-    }
 `;

@@ -101,11 +101,11 @@ const HeroSubtitle = styled.p`
 `;
 
 export const SpanYourMoney = styled.span`
-  margin-right: ${props => props.signup ? '5px' : '15px'};
+  margin-right: ${props => props.$signup ? '5px' : '15px'};
 `;
 export const SpanYourPlan = styled.span`
   color: #2D3A3A;
-  margin-right: ${props => props.signup ? '5px' : '15px'};
+  margin-right: ${props => props.$signup ? '5px' : '15px'};
 `;
 export const SpanYourFuture = styled.span`
   color: #248232;
