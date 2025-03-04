@@ -27,6 +27,6 @@ export default function Income() {
   }, [])
 
   return (
-    <Table />
+    <Table expense={false}/>
   );
 }

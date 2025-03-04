@@ -1,5 +1,6 @@
+import Table from "@/components/Table/Table";
 export default function Expenses(){
     return (
-        <><p>Expenses</p></>
+        <Table expense={true}/>
     );
 }

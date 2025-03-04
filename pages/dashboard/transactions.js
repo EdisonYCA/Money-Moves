@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { GoBackButton } from "@/components/Page Navigation/GoBackButton";
 
 export default function transactions() {
   const headers = [
@@ -9,6 +10,7 @@ export default function transactions() {
 
   return (
     <PageContainer>
+      <GoBackButton returnTo={"/dashboard"}/>
       <TableContainer>
         <StyledTable>
           <thead>
@@ -49,6 +51,7 @@ const PageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 `;
 
 const TableContainer = styled.div`

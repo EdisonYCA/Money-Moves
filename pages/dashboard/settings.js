@@ -1,4 +1,4 @@
-export default function Profile(){
+export default function settings(){
     return (
         <><p>Profile</p></>
     );
