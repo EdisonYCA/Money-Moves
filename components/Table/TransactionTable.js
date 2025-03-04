@@ -7,25 +7,41 @@ export default function TransactionTable() {
   ];
 
   return (
-      <StyledTable>
-        <tbody>
+    <StyledTable>
+      <tbody>
         <Tr>
-            <Td>Uber</Td>
-            <Td>Well's Fargo Checking</Td>
-            <Td>$36.55</Td>
-          </Tr>
-          <Tr>
-            <Td>Starbucks</Td>
-            <Td>Chase Savings</Td>
-            <Td>$4.25</Td>
-          </Tr>
-          <Tr>
-            <Td>Amazon</Td>
-            <Td>Bank of America</Td>
-            <Td>$120.99</Td>
-          </Tr>
-        </tbody>
-      </StyledTable>
+          <Td>Uber</Td>
+          <Td>Well's Fargo Checking</Td>
+          <Td>$36.55</Td>
+        </Tr>
+        <Tr>
+          <Td>Starbucks</Td>
+          <Td>Chase Savings</Td>
+          <Td>$4.25</Td>
+        </Tr>
+        <Tr>
+          <Td>Amazon</Td>
+          <Td>Bank of America</Td>
+          <Td>$120.99</Td>
+        </Tr>
+        <Tr>
+          <Td>Uber</Td>
+          <Td>Well's Fargo Checking</Td>
+          <Td>$36.55</Td>
+        </Tr>
+        <Tr>
+          <Td>Starbucks</Td>
+          <Td>Chase Savings</Td>
+          <Td>$4.25</Td>
+        </Tr>
+        <Tr>
+          <Td>Amazon</Td>
+          <Td>Bank of America</Td>
+          <Td>$120.99</Td>
+        </Tr>
+        
+      </tbody>
+    </StyledTable>
   );
 }
 

@@ -35,6 +35,7 @@ export default function transactions() {
               <Td>Bank of America</Td>
               <Td>$120.99</Td>
             </Tr>
+            
           </tbody>
         </StyledTable>
       </TableContainer>

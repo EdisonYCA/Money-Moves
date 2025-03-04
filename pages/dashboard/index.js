@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import { BarChart } from "@/components/Graphs/Bar";
+import { PieChart } from "@/components/Graphs/Pie";
 import SideNavBar from "@/components/Dashboard/SideNavBar";
 import { useRouter } from "next/router";
 import { useStateContext } from "@/context/StateContext";
 import { useEffect } from "react";
 import { Title } from "chart.js";
 import TransactionTable from "@/components/Table/TransactionTable";
+import ExpenseTable from "@/components/Table/ExpenseTable";
 
 export default function Dashboard() {
   const { user } = useStateContext();
@@ -43,27 +45,57 @@ export default function Dashboard() {
         </MoneyOverview>
         <TransactionsAnalytics>
           <GraphContainer>
-            <BarChart />
+            <HeaderContainer>
+              <Header>Expenses</Header>
+            </HeaderContainer>
+            <PieDiv>
+              <PieChart />
+            </PieDiv>
           </GraphContainer>
-          <PieContainer></PieContainer>
+        </TransactionsAnalytics>
+
+
+        <TransactionsAndBills>
           <TransactionsContainer>
             <HeaderContainer>
               <Header>Transactions</Header>
             </HeaderContainer>
             <TransactionTable />
             <ButtonContainer>
-              <AddAccount onClick={() => {router.push('/dashboard/transactions')}}>View All Transactions</AddAccount>
+              <AddAccount
+                onClick={() => {
+                  router.push("/dashboard/transactions");
+                }}
+              >
+                View All Transactions
+              </AddAccount>
             </ButtonContainer>
           </TransactionsContainer>
-        </TransactionsAnalytics>
-        <InvestmentsAndBills></InvestmentsAndBills>
+          <TransactionsContainer>
+            <HeaderContainer>
+              <Header>Upcoming Expenses</Header>
+            </HeaderContainer>
+            <ExpenseTable />
+          </TransactionsContainer>
+        </TransactionsAndBills>
+
+
       </MainContentContainer>
     </PageContainer>
   );
 }
 
+const PieDiv = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const HeaderContainer = styled.div`
   padding: 10px;
+  width: 100%;
 `;
 
 const Header = styled.h1`
@@ -78,7 +110,7 @@ export const Image = styled.img`
 
 const PageContainer = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 950px;
   background-color: #f0f0f0;
   display: flex;
 `;
@@ -136,62 +168,53 @@ const TransactionsAnalytics = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  padding: 13px;
+  gap: 25px;
 `;
 
 const GraphContainer = styled.div`
-  width: 50%;
+  width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   background-color: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border-radius: 16px;
-`;
+  margin: 0 10px 0 10px;
 
-const PieContainer = styled.div`
-  width: 25%;
-  height: 100%;
-  display: flex;
-  background-color: yellow;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+  }
 `;
 
 const TransactionsContainer = styled.div`
-  width: 25%;
+  width: 50%;
   height: 100%;
-  margin-right: 40px;
   display: flex;
   flex-direction: column;
   background-color: white;
+  max-height: 400px;
+  overflow-y: auto;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 16px;
+  margin-left: 10px;
+  margin-right: 10px;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+  }
 `;
 
-const InvestmentsAndBills = styled.div`
+const TransactionsAndBills = styled.div`
   width: 100%;
   height: 50%;
   display: flex;
-  background-color: green;
-`;
-
-const Investments = styled.div`
-  width: 100px;
-  height: 100px;
-  background-color: white;
-  margin: 0 90px 0 90px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Bills = styled.div`
-  width: 100px;
-  height: 100px;
-  background-color: white;
-  margin: 0 90px 0 90px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  gap: 5px;
+  margin: 10px 0 10px 0;
+  background-color: #f0f0f0;
 `;
 
 const ExpenseHeader = styled.p`
