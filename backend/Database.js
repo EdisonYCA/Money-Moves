@@ -1,4 +1,4 @@
-import { addDoc, getDocs, collection, serverTimestamp } from 'firebase/firestore';
+import { addDoc, getDocs, collection, serverTimestamp, setDoc } from 'firebase/firestore';
 import { db } from '@/library/firebaseConfig.js'
 
 
@@ -8,6 +8,21 @@ export async function addDataToFirestore(data) {
       ...data,
       timestamp: serverTimestamp()
     });
+    console.log("wrote: " + docRef)
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
+
+export async function addDataToFirestore2(data) {
+  const access_token = data.access_token
+  const userid = JSON.parse(localStorage.getItem("linkToken"));
+  
+  try {
+    const docRef = await setDoc(collection(db, "users", userid), {
+      access_token
+    });
+    console.log("wrote: " + docRef)
   } catch (e) {
     console.error("Error adding document: ", e);
   }
