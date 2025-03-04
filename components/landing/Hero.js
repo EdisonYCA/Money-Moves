@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 import {heroFeatureData} from '@/library/heroFeatureData';
 import Feature from '@/components/Landing/Feature';
+import { useRouter } from "next/router";
+
 
 export default function Hero() {
+  const router = useRouter();
 
   return (
     <>
-      <Main>
+      <Page>
         <Section1>
           <HeroSpan>
             <HeroContainer>
@@ -21,8 +24,8 @@ export default function Hero() {
                   Your Future.
                 </SpanYourFuture>
                 </HeroTitle>
-              <HeroSubtitle>Through MoneyMoves you can track your spending, set goals, and make smarter financial decisions.</HeroSubtitle>
-              <GetStartedBtn>Get Started</GetStartedBtn>
+              <HeroSubtitle>With MoneyMoves, you can track your spending, view your salary breakdown, and stay on top of upcoming bills to make smarter financial decisions.</HeroSubtitle>
+              <GetStartedBtn onClick={() => {router.push("/auth/signup")}}>Get Started</GetStartedBtn>
             </HeroContainer>
             <HeroPhotoContainer>
               <Image src="/dddynamite.svg"/>
@@ -34,40 +37,35 @@ export default function Hero() {
               return <Feature key={i} feature={title} description={desc} logo={logo}></Feature>
             })}
         </Section2>
-        <Section3>
-            <p> Section 3 </p>
-        </Section3>
-      </Main>
+      </Page>
     </>
   );
 }
 
-const Main = styled.main`
+const Page = styled.div`
     display: flex;
     flex-direction: column;
+    width: 100vw;
+    height: 100vh;
 `;
 
 const Section1 = styled.section`
   background-color: #FDFFFC; 
-  height: 650px;
+  width: 100vw;
+  height: 50%;
   position: relative;
 `;
 
 const Section2 = styled.section`
   background-color: #2AA84A; 
-  height: 650px;
+  height: 50%;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 5%
 `;
 
-const Section3 = styled.section`
-  background-color: #FDFFFC; 
-  height: 650px;
-  position: relative;
-  text-align: center;
-`;
 
 export const Image = styled.img`
   width: 100%;

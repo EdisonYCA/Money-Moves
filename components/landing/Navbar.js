@@ -18,7 +18,6 @@ export default function Navbar() {
     <NavLinks>
       <>
         {user && <ButtonLink href="/dashboard">Dashboard</ButtonLink>}
-        <ButtonLink href="#blog">Blogs</ButtonLink>
         {user ? (<LogOut onClick={logOut}>Log Out</LogOut>)
             :
             <>

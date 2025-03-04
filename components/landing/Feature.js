@@ -27,10 +27,11 @@ const Description = styled.p`
 `;
 
 const FeatureContainer = styled.div`
-    width: 400px;
+    width: 450px;
     height: 400px;
     background-color: white;
     margin: 10px;
+    padding: 10px;
     display: flex; 
     flex-direction: column;
     align-items: center; 
@@ -39,7 +40,7 @@ const FeatureContainer = styled.div`
     background-color: #FDFFFC; 
     border-radius: 16px; 
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
-    padding: 20px; /* Adds spacing inside */
+    padding: 20px
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 
     &:hover {
