@@ -45,6 +45,36 @@ export async function getExpenses() {
   }
 }
 
+export async function getExpensesCategories() {
+  const categories = []
+
+  try {
+    const expenses = await getExpenses();
+    for (const e of expenses){
+      categories.push(e.expense_name)
+    }
+    return categories
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+}
+
+export async function getCategoryData() {
+  const categorieData = []
+
+  try {
+    const expenses = await getExpenses();
+    for (const e of expenses){
+      categorieData.push(e.amount)
+    }
+    return categorieData
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+}
+
 export async function getSalary() {
   try {
     const docSnap = await getDoc(doc(db, "users", getCurrentUser()));

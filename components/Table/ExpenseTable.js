@@ -1,49 +1,40 @@
 import styled from "styled-components";
+import { useState, useEffect } from "react";
+import { getExpenses } from "@/backend/Database";
 
 export default function ExpenseTable() {
+  const [expenseArr, setExpenses] = useState([]);
+
+  useEffect(() => {
+    const getExpenseArr = async () => {
+      try {
+        const expenseArr = await getExpenses();
+        setExpenses(expenseArr);
+        console.log(expenseArr)
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getExpenseArr();
+  }, []);
+
   return (
     <StyledTable>
       <tbody>
-        <Tr>
-          <Td>Rent</Td>
-          <Td>$1,800</Td>
-          <Td>03/01/2024</Td>
-        </Tr>
-        <Tr>
-          <Td>Groceries</Td>
-          <Td>$250.75</Td>
-          <Td>03/01/2024</Td>
-        </Tr>
-        <Tr>
-          <Td>Electricity Bill</Td>
-          <Td>$95.30</Td>
-          <Td>03/01/2024</Td>
-        </Tr>
-        <Tr>
-          <Td>Internet</Td>
-          <Td>$60.00</Td>
-          <Td>03/01/2024</Td>
-        </Tr>
-        <Tr>
-          <Td>Car Insurance</Td>
-          <Td>$120.50</Td>
-          <Td>03/01/2024</Td>
-        </Tr>
-        <Tr>
-          <Td>Gas</Td>
-          <Td>$45.90</Td>
-          <Td>03/01/2024</Td>
-        </Tr>
-        <Tr>
-          <Td>Streaming Services (Netflix, Hulu)</Td>
-          <Td>$29.99</Td>
-          <Td>03/01/2024</Td>
-        </Tr>
-        <Tr>
-          <Td>Dining Out</Td>
-          <Td>$78.25</Td>
-          <Td>03/01/2024</Td>
-        </Tr>
+        { expenseArr ? expenseArr.map((expenseObj, i) => (
+          <Tr key={i}>
+            <Td>{expenseObj.expense_name}</Td>
+            <Td>${expenseObj.amount}</Td>
+            <Td>
+              {new Date(expenseObj.date.seconds * 1000).toLocaleDateString()}
+            </Td>
+          </Tr>
+        )) : <Tr>
+              <Td>Try Adding Your First Expense!</Td>
+              <Td>$0</Td>
+              <Td>(new Date()).toLocaleDateString()</Td>
+          </Tr>}
       </tbody>
     </StyledTable>
   );
