@@ -1,4 +1,4 @@
-import { setDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+import { setDoc, doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db, auth } from "@/library/firebaseConfig.js";
 
 export async function initFirestoreNewUser(uid) {
@@ -94,6 +94,19 @@ export async function updateSavingsRate(rate) {
   } catch (err) {
     console.error(err);
     return null;
+  }
+}
+
+export async function updateExpenses(expense) {
+  try {
+    const docRef = await doc(db, "users", getCurrentUser());
+    await updateDoc(docRef, {
+      expenses: arrayUnion(expense)
+    })
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
   }
 }
 

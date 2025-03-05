@@ -1,17 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Link from "../Link/Link";
 import { expenseHeaders } from "@/library/addExpenseHeaders";
 import { accountHeaders } from "@/library/addAccountHeaders";
 import { GoBackButton } from "../Page Navigation/GoBackButton";
+import { updateExpenses, getExpenses } from "@/backend/Database";
+import { useStateContext } from "@/context/StateContext";
 
 export default function Table({ expense }) {
   const headers = expense ? expenseHeaders : accountHeaders;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [expenseName, setExpense] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [dueDate, setDueDate] = useState(null);
+  const [expenseArr, setExpenses] = useState([]);
+  const { user } = useStateContext();
+
+  const saveExpense = () =>
+    updateExpenses({
+      expense_name: expenseName,
+      amount: Number(amount),
+      date: new Date(dueDate),
+    });
+
+  useEffect (() => {
+    const getExpenseArr = async () => {
+      try {
+        const expenseArr = await getExpenses();
+        setExpenses(expenseArr);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getExpenseArr();
+
+  }, [user, isModalOpen])
 
   return (
     <PageContainer>
-      <GoBackButton returnTo={"/dashboard"}/>
+      <GoBackButton returnTo={"/dashboard"} />
       <TableContainer>
         <StyledTable>
           <thead>
@@ -22,7 +50,15 @@ export default function Table({ expense }) {
               <Th />
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody>
+            {expenseArr.map((expenseObj, i) => (
+              <Tr key={i}>
+                <Td>{expenseObj.expense_name}</Td>
+                <Td>${expenseObj.amount}</Td>
+                <Td>{new Date(expenseObj.date.seconds * 1000).toLocaleDateString()}</Td>
+              </Tr>
+            ))}
+          </tbody>
         </StyledTable>
         {!expense && <Link />}
         {expense && (
@@ -41,18 +77,41 @@ export default function Table({ expense }) {
             <ExpenseForm>
               <label>
                 Expense Name:
-                <input type="text" placeholder="e.g., Rent" />
+                <input
+                  type="text"
+                  placeholder="e.g., Rent"
+                  onChange={(e) => {
+                    setExpense(e.target.value);
+                  }}
+                />
               </label>
               <label>
                 Amount:
-                <input type="number" placeholder="$0.00" />
+                <input
+                  type="number"
+                  placeholder="$0.00"
+                  onChange={(a) => {
+                    setAmount(a.target.value);
+                  }}
+                />
               </label>
               <label>
                 Due Date:
-                <input type="text" placeholder="03/01/2024" />
+                <input
+                  type="text"
+                  placeholder="03/01/2024"
+                  onChange={(d) => {
+                    setDueDate(d.target.value);
+                  }}
+                />
               </label>
               <ButtonGroup>
-                <SaveButton onClick={() => setIsModalOpen(false)}>
+                <SaveButton
+                  onClick={() => {
+                    saveExpense();
+                    setIsModalOpen(false);
+                  }}
+                >
                   Save
                 </SaveButton>
                 <CancelButton onClick={() => setIsModalOpen(false)}>
@@ -66,6 +125,16 @@ export default function Table({ expense }) {
     </PageContainer>
   );
 }
+
+const Tr = styled.tr`
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+`;
+
+const Td = styled.td`
+  padding: 12px;
+  color: #555;
+`;
 
 const PageContainer = styled.div`
   width: 100vw;
@@ -169,7 +238,7 @@ const ButtonGroup = styled.div`
 `;
 
 const SaveButton = styled.button`
-  background-color: #2AA84A;
+  background-color: #2aa84a;
   color: white;
   padding: 8px 15px;
   border: none;
@@ -205,4 +274,3 @@ const CancelButton = styled.button`
     transform: scale(0.95);
   }
 `;
-

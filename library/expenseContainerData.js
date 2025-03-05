@@ -6,19 +6,19 @@ const formatSalary = async () => {
     if (userSalary == 0) {
         return "$0k"
     } 
-    return `$${(userSalary / 12).toFixed(1)}k`;
+    return `$${((userSalary / 12) / 1000).toFixed(1)}k`;
 }
 
 const formatExpenses = async () => {
     const userExpenses = await getExpenses();
 
-    const expensesAmount = 0;
+    let expensesAmount = 0;
 
     for(const e of userExpenses){
         expensesAmount += e.amount;
     }
 
-    return `$${expensesAmount}k`;
+    return `$${expensesAmount / 1000}k`;
 }
 
 const formatUsersSavingRate = async () => {
@@ -27,9 +27,7 @@ const formatUsersSavingRate = async () => {
 }
 
 const formatNetIncome = async () => {
-    const userSalary = await getSalary();
-    const userExpenses = await getExpenses();
-    return `$${((userSalary / 12).toFixed(1)) - ((userExpenses / 12).toFixed(1))}k`
+        return `$${0}k`
 }
 
 export const expenseContainerData = [
