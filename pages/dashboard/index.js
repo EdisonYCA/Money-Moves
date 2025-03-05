@@ -9,9 +9,11 @@ import TransactionTable from "@/components/Table/TransactionTable";
 import ExpenseTable from "@/components/Table/ExpenseTable";
 import { expenseContainerData } from "@/library/expenseContainerData";
 import { useState } from "react";
+import { getSalary, getSavingsRate } from "@/backend/Database";
 
-export default function Dashboard({salary, savingsRate}) {
-  const { user } = useStateContext();
+export default function Dashboard() {
+  const { user, salary, savingsRate, setSalary, setSavingsRate } =
+    useStateContext();
   const router = useRouter();
   const [moneyOverview, setMoneyOverview] = useState(
     expenseContainerData.map(([color, title, amount], i) => (
@@ -27,15 +29,16 @@ export default function Dashboard({salary, savingsRate}) {
       router.push("/");
     }
 
-    const updatedExpenseData = expenseContainerData.map(([color, title, amount], i) => (
-      <ExpenseContainer key={i} color={color}>
-        <ExpenseText>{title}</ExpenseText>
-        <ExpenseHeader>{amount}</ExpenseHeader>
-      </ExpenseContainer>
-    ));
+    const updatedExpenseData = expenseContainerData.map(
+      ([color, title, amount], i) => (
+        <ExpenseContainer key={i} color={color}>
+          <ExpenseText>{title}</ExpenseText>
+          <ExpenseHeader>{amount}</ExpenseHeader>
+        </ExpenseContainer>
+      )
+    );
 
     setMoneyOverview(updatedExpenseData);
-
   }, [user, salary, savingsRate]);
 
   return (

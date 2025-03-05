@@ -1,4 +1,4 @@
-import { getExpenses, getSalary, getSavingsRate } from "@/backend/Database";
+import { getExpenses, getSalary, getSavingsRate, userActive } from "@/backend/Database";
 
 const formatSalary = async () => {
     const userSalary = await getSalary();
@@ -33,8 +33,8 @@ const formatNetIncome = async () => {
 }
 
 export const expenseContainerData = [
-    ["#1d6829", "Monthly Income", formatSalary()],
-    ["#2AA84A", "Monthly Expenses", formatExpenses()],
-    ["#2D3A3A", "Monthly Net Income", formatNetIncome()],
-    ["black", "Monthly Savings Rate", formatUsersSavingRate()],
+    ["#1d6829", "Monthly Income", userActive() ? formatSalary() : "$0k"],
+    ["#2AA84A", "Monthly Expenses", userActive() ? formatExpenses() : "$0k"],
+    ["#2D3A3A", "Monthly Net Income", userActive() ? formatNetIncome() : "$0k"],
+    ["black", "Monthly Savings Rate", userActive() ? formatUsersSavingRate() : "0.0%" ],
   ];

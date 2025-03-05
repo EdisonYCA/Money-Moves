@@ -36,7 +36,6 @@ export const logUserInGoogle = (setUser) => {
         const token = credential.accessToken;
         const user = result.user;
         setUser(user);
-        initFirestoreNewUser(user.uid)
     }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;

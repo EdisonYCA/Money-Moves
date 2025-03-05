@@ -101,3 +101,8 @@ const getCurrentUser = () => {
   const user = auth.currentUser;
   return user ? user.uid : null;
 };
+
+export const userActive = () => {
+  const user = auth.currentUser;
+  return user ? true : false;
+};

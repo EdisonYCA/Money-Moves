@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { GoBackButton } from "@/components/Page Navigation/GoBackButton";
 import { updateSalary, updateSavingsRate } from "@/backend/Database";
+import { useStateContext } from "@/context/StateContext";
 
 export default function settings() {
-  const [salary, setSalary] = useState(50000);
-  const [savingsRate, setSavingsRate] = useState(20); 
+  const {user, salary, setSalary, savingsRate, setSavingsRate} = useStateContext();
   const yearlySavings = ((salary * savingsRate) / 100).toFixed(2);
 
   return (
@@ -17,7 +17,7 @@ export default function settings() {
         <Input
           type="number"
           value={salary}
-          onChange={(e) => setSalary(e.target.value)}
+          onChange={(e) => setSalary(Number(e.target.value))}
         />
       </Section>
       <Section>
@@ -25,7 +25,7 @@ export default function settings() {
         <Input
           type="number"
           value={savingsRate}
-          onChange={(e) => setSavingsRate(e.target.value)}
+          onChange={(e) => setSavingsRate(Number(e.target.value))}
         />
       </Section>
       <SavingsRateContainer>
