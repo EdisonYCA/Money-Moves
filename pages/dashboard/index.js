@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { BarChart } from "@/components/Graphs/Bar";
 import { PieChart } from "@/components/Graphs/Pie";
 import SideNavBar from "@/components/Dashboard/SideNavBar";
 import { useRouter } from "next/router";
@@ -8,23 +7,36 @@ import { useEffect } from "react";
 import { Title } from "chart.js";
 import TransactionTable from "@/components/Table/TransactionTable";
 import ExpenseTable from "@/components/Table/ExpenseTable";
+import { expenseContainerData } from "@/library/expenseContainerData";
+import { useState } from "react";
 
-export default function Dashboard() {
+export default function Dashboard({salary, savingsRate}) {
   const { user } = useStateContext();
   const router = useRouter();
+  const [moneyOverview, setMoneyOverview] = useState(
+    expenseContainerData.map(([color, title, amount], i) => (
+      <ExpenseContainer key={i} color={color}>
+        <ExpenseText>{title}</ExpenseText>
+        <ExpenseHeader>{amount}</ExpenseHeader>
+      </ExpenseContainer>
+    ))
+  );
 
   useEffect(() => {
     if (!user) {
       router.push("/");
     }
-  }, [user]);
 
-  const expenseContainerData = [
-    ["#1d6829", "Monthly Income", "$4.1k"],
-    ["#2AA84A", "Monthly Expenses", "2k"],
-    ["#2D3A3A", "Net Income", "$1.1k"],
-    ["black", "Savings Rate", "3.2%"],
-  ];
+    const updatedExpenseData = expenseContainerData.map(([color, title, amount], i) => (
+      <ExpenseContainer key={i} color={color}>
+        <ExpenseText>{title}</ExpenseText>
+        <ExpenseHeader>{amount}</ExpenseHeader>
+      </ExpenseContainer>
+    ));
+
+    setMoneyOverview(updatedExpenseData);
+
+  }, [user, salary, savingsRate]);
 
   return (
     <PageContainer>
@@ -35,14 +47,7 @@ export default function Dashboard() {
       </NavigationPanel>
 
       <MainContentContainer>
-        <MoneyOverview>
-          {expenseContainerData.map(([color, title, amount], i) => (
-            <ExpenseContainer key={i} color={color}>
-              <ExpenseText>{title}</ExpenseText>
-              <ExpenseHeader>{amount}</ExpenseHeader>
-            </ExpenseContainer>
-          ))}
-        </MoneyOverview>
+        <MoneyOverview>{moneyOverview}</MoneyOverview>
         <TransactionsAnalytics>
           <GraphContainer>
             <HeaderContainer>
@@ -53,7 +58,6 @@ export default function Dashboard() {
             </PieDiv>
           </GraphContainer>
         </TransactionsAnalytics>
-
 
         <TransactionsAndBills>
           <TransactionsContainer>
@@ -78,8 +82,6 @@ export default function Dashboard() {
             <ExpenseTable />
           </TransactionsContainer>
         </TransactionsAndBills>
-
-
       </MainContentContainer>
     </PageContainer>
   );

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { GoBackButton } from "@/components/Page Navigation/GoBackButton";
+import { updateSalary, updateSavingsRate } from "@/backend/Database";
 
 export default function settings() {
   const [salary, setSalary] = useState(50000);
@@ -30,7 +31,10 @@ export default function settings() {
       <SavingsRateContainer>
         <p>Annual Savings: <strong>${yearlySavings}</strong></p>
       </SavingsRateContainer>
-      <SaveButton>Save Changes</SaveButton>
+      <SaveButton onClick={() => {
+        updateSalary(salary)
+        updateSavingsRate(savingsRate)
+      }}>Save Changes</SaveButton>
     </PageContainer>
   );
 }
