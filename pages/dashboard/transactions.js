@@ -6,21 +6,22 @@ import { headers } from "@/library/transactionTableHeaders";
 import { useStateContext } from "@/context/StateContext";
 
 export default function transactions() {
-  const {user} = useStateContext();
+  const { user } = useStateContext();
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
-    const fetchTransactions = async () => {
-      const data = await getTransactionData()
-      console.log(data)
-      setTransactions(data || [])
+    if (user) {
+      const fetchTransactions = async () => {
+        const data = await getTransactionData();
+        setTransactions(data || []);
+      };
+      fetchTransactions();
     }
-    fetchTransactions()
-  }, [user])
+  }, [user]);
 
   return (
     <PageContainer>
-      <GoBackButton returnTo={"/dashboard"}/>
+      <GoBackButton returnTo={"/dashboard"} />
       <TableContainer>
         <StyledTable>
           <thead>
@@ -32,15 +33,13 @@ export default function transactions() {
             </tr>
           </thead>
           <tbody>
-            {
-              transactions.map((t) => (
-                <Tr key={t.transaction_id}>
-                  <Td>{t.name}</Td>
-                  <Td>${t.amount.toFixed(2)}</Td> 
-                  <Td>{t.date}</Td> 
-                </Tr>
-              ))
-            }
+            {transactions.map((t) => (
+              <Tr key={t.transaction_id}>
+                <Td>{t.name}</Td>
+                <Td>${t.amount.toFixed(2)}</Td>
+                <Td>{t.date}</Td>
+              </Tr>
+            ))}
           </tbody>
         </StyledTable>
       </TableContainer>
