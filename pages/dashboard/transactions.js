@@ -1,12 +1,22 @@
 import styled from "styled-components";
 import { GoBackButton } from "@/components/Page Navigation/GoBackButton";
+import { useEffect, useState } from "react";
+import { getTransactionData } from "@/library/transactionData";
+import { headers } from "@/library/transactionTableHeaders";
+import { useStateContext } from "@/context/StateContext";
 
 export default function transactions() {
-  const headers = [
-    { id: 1, label: "Account" },
-    { id: 2, label: "Balance" },
-    { id: 3, label: "Account Number" },
-  ];
+  const {user} = useStateContext();
+  const [transactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      const data = await getTransactionData()
+      console.log(data)
+      setTransactions(data || [])
+    }
+    fetchTransactions()
+  }, [user])
 
   return (
     <PageContainer>
@@ -22,21 +32,15 @@ export default function transactions() {
             </tr>
           </thead>
           <tbody>
-            <Tr>
-              <Td>Uber</Td>
-              <Td>Well's Fargo Checking</Td>
-              <Td>$36.55</Td>
-            </Tr>
-            <Tr>
-              <Td>Starbucks</Td>
-              <Td>Chase Savings</Td>
-              <Td>$4.25</Td>
-            </Tr>
-            <Tr>
-              <Td>Amazon</Td>
-              <Td>Bank of America</Td>
-              <Td>$120.99</Td>
-            </Tr>
+            {
+              transactions.map((t) => (
+                <Tr key={t.transaction_id}>
+                  <Td>{t.name}</Td>
+                  <Td>${t.amount.toFixed(2)}</Td> 
+                  <Td>{t.date}</Td> 
+                </Tr>
+              ))
+            }
           </tbody>
         </StyledTable>
       </TableContainer>

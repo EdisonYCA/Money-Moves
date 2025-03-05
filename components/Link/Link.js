@@ -4,47 +4,43 @@ import styled from "styled-components";
 
 export default function Link() {
   const { linkToken } = useStateContext();
-  
-  const onSuccess = (public_token) => {
-    const exchangePublicTokenForAccessToken = async () => {
-      try {
-        const response = await fetch("/api/createAccessToken", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ public_token }),
-        });
 
-        if (response.ok) {
-          console.log("success");
-        } else {
-          const error = await response.json();
-          console.error("Error:", error);
-        }
-      } catch (err) {
-        console.error("Fetch error:", err);
+  const onSuccess = async (public_token) => {
+    try {
+      const response = await fetch("/api/createAccessToken", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({public_token: public_token}),
+      });
+
+      if (response.ok) {
+        console.log("success");
+      } else {
+        const error = await response.json();
+        console.error("Error:", error);
       }
-    };
-
-    exchangePublicTokenForAccessToken();
+    } catch (err) {
+      console.error("Fetch error:", err);
+    }
   };
 
   const config = {
     token: linkToken,
-    onSuccess: (public_token) => {
-        onSuccess(public_token);
-    },
+    onSuccess,
   };
 
   const { open, ready } = usePlaidLink(config);
 
   return (
     <ButtonContainer>
-      <AddAccount onClick={() => {
-open()}}
-      disabled={!ready}
-    >
-      Add Account
-    </AddAccount>
+      <AddAccount
+        onClick={() => {
+          open();
+        }}
+        disabled={!ready}
+      >
+        Add Account
+      </AddAccount>
     </ButtonContainer>
   );
 }
@@ -63,7 +59,7 @@ const AddAccount = styled.button`
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  
+
   &:hover {
     background-color: #1d6829;
     transform: scale(1.05);

@@ -1,5 +1,6 @@
 import { setDoc, doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db, auth } from "@/library/firebaseConfig.js";
+import transactions from "@/pages/dashboard/transactions";
 
 export async function initFirestoreNewUser(uid) {
   try {
@@ -140,7 +141,87 @@ export async function updateExpenses(expense) {
   }
 }
 
-const getCurrentUser = () => {
+export async function updateAccounts(access_token, item_id, uid) {
+  try {
+    const docRef = await doc(db, "users", uid);
+    await updateDoc(docRef, {
+      accounts: arrayUnion({access_token: access_token, item_id: item_id})
+    })
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}
+
+export async function getAccounts() {
+  try {
+    const docSnap = await getDoc(doc(db, "users", getCurrentUser()));
+    if (docSnap.exists()) {
+      return docSnap.data().accounts;
+    } else {
+      return null;
+    }
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
+export async function getTransactions() {
+  try {
+    const docSnap = await getDoc(doc(db, "users", getCurrentUser()));
+    if (docSnap.exists()) {
+      return docSnap.data().transactions;
+    } else {
+      return null;
+    }
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
+export async function updateNewTransactions(newTransactions) {
+  try {
+    const docRef = await doc(db, "users", getCurrentUser());
+    await updateDoc(docRef, {
+      transactions: arrayUnion(...newTransactions)
+    })
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}
+
+export async function filterTransactions() {
+  try {
+    const docRef = await doc(db, "users", uid);
+    await updateDoc(docRef, {
+      accounts: arrayUnion({access_token: access_token, item_id: item_id})
+    })
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}
+
+export async function updateTransactions() {
+  try {
+    const docRef = await doc(db, "users", uid);
+    await updateDoc(docRef, {
+      accounts: arrayUnion({access_token: access_token, item_id: item_id})
+    })
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}
+
+export const getCurrentUser = () => {
   const user = auth.currentUser;
   return user ? user.uid : null;
 };

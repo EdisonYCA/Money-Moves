@@ -3,7 +3,7 @@ import {client, PLAID_COUNTRY_CODES, PLAID_PRODUCTS} from '@/library/plaid';
 export default async function handler(req, res){
     try{
         const response = await client.linkTokenCreate({
-            client_name: 'Plaid Test App',
+            client_name: 'MoneyMoves',
             user: { client_user_id: 'user-123' },
             products: PLAID_PRODUCTS,
             country_codes: PLAID_COUNTRY_CODES,

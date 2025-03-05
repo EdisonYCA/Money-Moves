@@ -10,7 +10,6 @@ export default function ExpenseTable() {
       try {
         const expenseArr = await getExpenses();
         setExpenses(expenseArr);
-        console.log(expenseArr)
       } catch (err) {
         console.log(err);
       }

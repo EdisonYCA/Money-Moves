@@ -6,6 +6,7 @@ import { accountHeaders } from "@/library/addAccountHeaders";
 import { GoBackButton } from "../Page Navigation/GoBackButton";
 import { updateExpenses, getExpenses } from "@/backend/Database";
 import { useStateContext } from "@/context/StateContext";
+import { getTransactionData } from "@/library/transactionData";
 
 export default function Table({ expense }) {
   const headers = expense ? expenseHeaders : accountHeaders;
@@ -34,6 +35,7 @@ export default function Table({ expense }) {
     };
 
     getExpenseArr();
+    getTransactionData();
 
   }, [user, isModalOpen])
 
