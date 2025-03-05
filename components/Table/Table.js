@@ -51,13 +51,16 @@ export default function Table({ expense }) {
             </tr>
           </thead>
           <tbody>
-            {expenseArr.map((expenseObj, i) => (
+
+            {expense ? expenseArr.map((expenseObj, i) => (
               <Tr key={i}>
                 <Td>{expenseObj.expense_name}</Td>
                 <Td>${expenseObj.amount}</Td>
                 <Td>{new Date(expenseObj.date.seconds * 1000).toLocaleDateString()}</Td>
               </Tr>
-            ))}
+            )) : <Tr>
+              </Tr>}
+
           </tbody>
         </StyledTable>
         {!expense && <Link />}
