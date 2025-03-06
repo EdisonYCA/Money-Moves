@@ -5,12 +5,13 @@ import { useRouter } from "next/router";
 
 
 export default function Navbar() {
-  const { user, setUser } = useStateContext();
+  const { user, setUser, setFirstLoad } = useStateContext();
   const router = useRouter();
 
   const logOut = (e) => {
     e.preventDefault();
     setUser(null);
+    setFirstLoad(true);
     router.push("/");
   }
 

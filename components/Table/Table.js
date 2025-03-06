@@ -16,7 +16,6 @@ export default function Table({ expense }) {
   const [dueDate, setDueDate] = useState(null);
   const [expenseArr, setExpenses] = useState([]);
   const { accounts, setAccounts } = useStateContext();
-  const { user } = useStateContext();
 
   const saveExpense = () =>
     updateExpenses({
@@ -25,39 +24,39 @@ export default function Table({ expense }) {
       date: new Date(dueDate),
     });
 
-  useEffect(() => {
-    if (expense) {
-      const getExpenseArr = async () => {
-        try {
-          const expenseArr = await getExpenses();
-          setExpenses(expenseArr);
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      getExpenseArr();
-    } else {
-      const getAccountsArr = async () => {
-        try {
-          const accessTokens = await getAccounts();
+  // useEffect(() => {
+  //   if (expense) {
+  //     const getExpenseArr = async () => {
+  //       try {
+  //         const expenseArr = await getExpenses();
+  //         setExpenses(expenseArr);
+  //       } catch (err) {
+  //         console.log(err);
+  //       }
+  //     };
+  //     getExpenseArr();
+  //   } else {
+  //     const getAccountsArr = async () => {
+  //       try {
+  //         const accessTokens = await getAccounts();
 
-          for (const acc of accessTokens) {
-            const accInfoResponse = await fetch("/api/getAccountInfo", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ access_token: acc.access_token }),
-            });
-            const accInfo = await accInfoResponse.json();
-            setAccounts(accInfo.accounts);
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      };
+  //         for (const acc of accessTokens) {
+  //           const accInfoResponse = await fetch("/api/getAccountInfo", {
+  //             method: "POST",
+  //             headers: { "Content-Type": "application/json" },
+  //             body: JSON.stringify({ access_token: acc.access_token }),
+  //           });
+  //           const accInfo = await accInfoResponse.json();
+  //           setAccounts(accInfo.accounts);
+  //         }
+  //       } catch (err) {
+  //         console.log(err);
+  //       }
+  //     };
 
-      getAccountsArr();
-    }
-  }, [isModalOpen]);
+  //     getAccountsArr();
+  //   }
+  // }, [isModalOpen]);
 
   return (
     <PageContainer>

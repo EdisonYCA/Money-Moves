@@ -16,107 +16,85 @@ export default function Dashboard() {
   const {
     user,
     salary,
+    expenseArr,
     savingsRate,
     setTransactions,
     setExpenses,
     setSalary,
     setSavingsRate,
+    firstLoad,
+    setFirstLoad,
+    moneyOverview, 
+    setMoneyOverview
   } = useStateContext();
   const router = useRouter();
-  const [moneyOverview, setMoneyOverview] = useState(null);
 
   useEffect(() => {
     if (!user) {
       router.push("/");
     }
-
-    const firstLoad = localStorage.getItem("firstLoad");
-
-    // if (!firstLoad) {
-    localStorage.setItem("firstLoad", "true");
-
-    const fetchTransactions = async () => {
-      const data = await getTransactionData();
-      setTransactions(data || []);
-    };
-
-    const getExpenseArr = async () => {
-      try {
-        const expenseArr = await getExpenses();
-        setExpenses(expenseArr);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    const getSalaryAndSavingsRate = async () => {
-      try {
-        const dbSalary = await getSalary();
-        const dbSavingsRate = await getSavingsRate();
-
-        setSalary(dbSalary);
-        setSavingsRate(dbSavingsRate);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getExpenseArr();
-    fetchTransactions();
-    getSalaryAndSavingsRate();
-
-    // } else {
-    //   localStorage.setItem("firstLoad", "false");
-    // }
   }, [user]);
 
   useEffect(() => {
-    let expensesAmount = 0;
-
-    const formatExpenses = async () => {
-      const userExpenses = await getExpenses();
-
-      for (const e of userExpenses) {
-        expensesAmount += e.amount;
+    if (!firstLoad) return;
+  
+    const formatDashboard = async () => {
+      try {
+        const [transactionsData, dbExpenses, dbSalary, dbSavingsRate] =
+          await Promise.all([
+            getTransactionData(),
+            getExpenses(),
+            getSalary(),
+            getSavingsRate(),
+          ]);
+  
+        setTransactions(transactionsData || []);
+        setExpenses(dbExpenses);
+        setSalary(dbSalary);
+        setSavingsRate(dbSavingsRate);
+  
+        setFirstLoad(false);
+      } catch (err) {
+        console.log("Error in formatDashboard:", err);
       }
-
-      return `$${(expensesAmount / 12 / 1000).toFixed(1)}k`;
     };
-
-    const formatExpenseContainerData = async () => {
-      const exp = await formatExpenses();
-
-      const expenseContainerData = [
-        ["#1d6829", "Monthly Income", `$${(salary / 12 / 1000).toFixed(1)}k`],
-        ["#2AA84A", "Monthly Expenses", exp],
-        [
-          "#2D3A3A",
-          "Monthly Net Income",
-          `$${((salary - expensesAmount) / 12 / 1000).toFixed(1)}k`,
-        ],
-        ["black", "Monthly Savings Rate", `${(savingsRate / 100).toFixed(1)}%`],
-      ];
-
-      return expenseContainerData;
-    };
-
-    const updateMoneyOverview = async () => {
-      const expenseContainerData = await formatExpenseContainerData();
-
-      const updatedExpenseData = expenseContainerData.map(
-        ([color, title, amount], i) => (
-          <ExpenseContainer key={i} color={color}>
-            <ExpenseText>{title}</ExpenseText>
-            <ExpenseHeader>{amount}</ExpenseHeader>
-          </ExpenseContainer>
-        )
-      );
-
-      setMoneyOverview(updatedExpenseData);
-    };
-
-    updateMoneyOverview();
-  }, [salary, savingsRate]);
+  
+    formatDashboard();
+  }, [firstLoad]);
+  
+  const updateMoneyOverview = (expenseArr, salary, savingsRate) => {
+    let expensesAmount = expenseArr.reduce((sum, e) => sum + e.amount, 0);
+  
+    const expenseContainerData = [
+      ["#1d6829", "Monthly Income", `$${(salary / 12 / 1000).toFixed(1)}k`],
+      [
+        "#2AA84A",
+        "Monthly Expenses",
+        `$${(expensesAmount / 12 / 1000).toFixed(1)}k`,
+      ],
+      [
+        "#2D3A3A",
+        "Monthly Net Income",
+        `$${((salary - expensesAmount) / 12 / 1000).toFixed(1)}k`,
+      ],
+      ["black", "Monthly Savings Rate", `${(savingsRate / 100).toFixed(1)}%`],
+    ];
+  
+    const updatedExpenseData = expenseContainerData.map(
+      ([color, title, amount], i) => (
+        <ExpenseContainer key={i} color={color}>
+          <ExpenseText>{title}</ExpenseText>
+          <ExpenseHeader>{amount}</ExpenseHeader>
+        </ExpenseContainer>
+      )
+    );
+  
+    setMoneyOverview(updatedExpenseData);
+  };
+  
+  useEffect(() => {
+    updateMoneyOverview(expenseArr, salary, savingsRate);
+  }, [salary, savingsRate, expenseArr]);
 
   return (
     <PageContainer>
