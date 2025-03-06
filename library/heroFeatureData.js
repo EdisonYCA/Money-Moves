@@ -1,5 +1,5 @@
 export const heroFeatureData = [
-    ["Paycheck Split Visualizer", "A dynamic pie chart that visually represents how your paycheck is allocated across categories such as bills, savings, investments, and discretionary spending. Helps users quickly understand their financial distribution for the month.", "briefcase-24-2.svg"],
-    ["Smart Bill Alerts", "A real-time notification system that tracks upcoming bill due dates and sends timely reminders to avoid late payments. Displays urgency levels based on due dates and outstanding amounts.", "/handshake-2.svg"],
-    ["Investment Snapshot", "A concise overview of your current investments, including portfolio balance, recent performance trends, and allocation percentages. Provides quick insights into asset growth and diversification", "/interview-3.svg"]
+    ["Paycheck Split Visualizer", "A dynamic pie chart that visually represents how your paycheck is allocated across categories such as bills, savings, investments, and discretionary spending.", "briefcase-24-2.svg"],
+    ["Bill Due Dates", "A dynamic table system that tracks upcoming bill due dates and sends allows you to avoid late payments.", "/handshake-2.svg"],
+    ["Transaction Management", "A dynamic overview of your transactions accross all linked accounts. Though only up to 100 transactions, you may link as many accounts.", "/interview-3.svg"]
 ]
