@@ -46,7 +46,7 @@ const Page = styled.div`
     display: flex;
     flex-direction: column;
     width: 100vw;
-    height: 2000px;
+    height: 1500px;
 `;
 
 const Section1 = styled.section`
