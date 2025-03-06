@@ -70,12 +70,12 @@ export default function Dashboard() {
       [
         "#2AA84A",
         "Monthly Expenses",
-        `$${(expensesAmount / 12 / 1000).toFixed(1)}k`,
+        `$${(expensesAmount / 1000).toFixed(1)}k`,
       ],
       [
         "#2D3A3A",
         "Monthly Net Income",
-        `$${((salary - expensesAmount) / 12 / 1000).toFixed(1)}k`,
+        `$${(((salary / 12) - expensesAmount) / 1000).toFixed(1)}k`,
       ],
       ["black", "Monthly Savings Rate", `${(savingsRate / 100).toFixed(1)}%`],
     ];
