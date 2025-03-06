@@ -1,36 +1,47 @@
-import { getAccounts, updateNewTransactions, getTransactions } from "@/backend/Database";
+import {
+  getAccounts,
+  updateNewTransactions,
+  getTransactions,
+} from "@/backend/Database";
 
 export const getTransactionData = async () => {
   try {
     const accounts = await getAccounts();
-    const results = await fetch("/api/transactionsSync", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ access_token: accounts[0].access_token, cursor: null }),
-    });
+    let allTransactions = [];
 
-    const {added, removed, modified} = await results.json();
+    for (const account of accounts) {
+      const response = await fetch("/api/transactionsSync", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_token: account.access_token,
+          cursor: null,
+        }),
+      });
 
-    const filteredAdded = filterTransactionData(added)
-    const filteredRemoved = filterTransactionData(removed)
-    const filteredModified = filterTransactionData(removed)
+      const { added, removed, modified } = await response.json();
 
-    await updateNewTransactions(filteredAdded);
+      const filteredAdded = filterTransactionData(added);
+
+      await updateNewTransactions(filteredAdded);
+
+      allTransactions.push(
+        ...filteredAdded
+      );
+    }
 
     const finalTransactions = await getTransactions();
-    return finalTransactions || []
-
+    return finalTransactions || allTransactions;
   } catch (err) {
     console.log(err);
   }
 };
 
 const filterTransactionData = (transactions) => {
-    return transactions.map(trans => ({
-      name: trans.name,
-      transactionID: trans.transaction_id,
-      amount: trans.amount,
-      date: trans.authorized_date
-    }));
+  return transactions.map((trans) => ({
+    name: trans.name,
+    transactionID: trans.transaction_id,
+    amount: trans.amount,
+    date: trans.authorized_date,
+  }));
 };
-  

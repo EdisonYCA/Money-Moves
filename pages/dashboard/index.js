@@ -32,7 +32,7 @@ export default function Dashboard() {
 
     const firstLoad = localStorage.getItem("firstLoad");
 
-    if (!firstLoad) {
+    // if (!firstLoad) {
       localStorage.setItem("firstLoad", "true");
 
       const fetchTransactions = async () => {
@@ -66,9 +66,9 @@ export default function Dashboard() {
       fetchTransactions();
       getSalaryAndSavingsRate();
 
-    } else {
-      localStorage.setItem("firstLoad", "false");
-    }
+    // } else {
+    //   localStorage.setItem("firstLoad", "false");
+    // }
   }, [user]);
 
   useEffect(() => {
