@@ -1,39 +1,41 @@
-import { useEffect } from "react";
 import styled from "styled-components";
 import { GoBackButton } from "@/components/Page Navigation/GoBackButton";
 import { updateSalary, updateSavingsRate } from "@/backend/Database";
 import { useStateContext } from "@/context/StateContext";
+import { useRef } from "react";
 
 export default function settings() {
-  const {user, salary, setSalary, savingsRate, setSavingsRate} = useStateContext();
-  const yearlySavings = ((salary * savingsRate) / 100).toFixed(2);
+  const {salary, setSalary, savingsRate, setSavingsRate} = useStateContext();
+  const salaryRef = useRef();
+  const savingsRateRef = useRef();
 
   return (
     <PageContainer>
        <GoBackButton returnTo={"/dashboard"}/>
       <PageTitle>Settings</PageTitle>
       <Section>
-        <Header>Annual Salary $</Header>
+        <Header>New Annual Salary $</Header>
         <Input
           type="number"
-          value={salary}
-          onChange={(e) => setSalary(Number(e.target.value))}
+          ref = {salaryRef}
         />
       </Section>
       <Section>
-        <Header>Savings Rate %</Header>
+        <Header>New Savings Rate %</Header>
         <Input
           type="number"
-          value={savingsRate}
-          onChange={(e) => setSavingsRate(Number(e.target.value))}
+          ref = {savingsRateRef}
         />
       </Section>
-      <SavingsRateContainer>
-        <p>Annual Savings: <strong>${yearlySavings}</strong></p>
-      </SavingsRateContainer>
-      <SaveButton onClick={() => {
-        updateSalary(salary)
-        updateSavingsRate(savingsRate)
+      <SaveButton onClick={async () => {
+        setSalary(Number(salaryRef.current.value))
+        setSavingsRate(Number(savingsRateRef.current.value))
+
+        salaryRef.current.value = ""
+        savingsRateRef.current.value = ""
+        
+        await updateSalary(salary)
+        await updateSavingsRate(savingsRate)
       }}>Save Changes</SaveButton>
     </PageContainer>
   );
