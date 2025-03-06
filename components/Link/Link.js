@@ -1,16 +1,23 @@
 import { usePlaidLink } from "react-plaid-link";
 import { useStateContext } from "@/context/StateContext";
 import styled from "styled-components";
+import { getCurrentUser } from "@/backend/Database";
 
 export default function Link() {
   const { linkToken } = useStateContext();
+  const uid = getCurrentUser();
 
   const onSuccess = async (public_token) => {
     try {
       const response = await fetch("/api/createAccessToken", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({public_token: public_token}),
+        body: JSON.stringify({
+          public_token: public_token,
+          metadata: {
+            otherInfo: uid
+          }
+        }),
       });
 
       if (response.ok) {
