@@ -6,7 +6,7 @@ export default function TransactionTable() {
   return (
     <StyledTable>
       <tbody>
-        {transactions.map((t) => (
+        {transactions.slice(0, 7).map((t) => (
           <Tr key={t.transaction_id}>
             <Td>{t.name}</Td>
             <Td>${t.amount.toFixed(2)}</Td>

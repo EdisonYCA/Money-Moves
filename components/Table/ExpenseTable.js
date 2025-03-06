@@ -7,7 +7,7 @@ export default function ExpenseTable() {
   return (
     <StyledTable>
       <tbody>
-        { expenseArr ? expenseArr.map((expenseObj, i) => (
+        { expenseArr ? expenseArr.slice(0,7).map((expenseObj, i) => (
           <Tr key={i}>
             <Td>{expenseObj.expense_name}</Td>
             <Td>${expenseObj.amount}</Td>
