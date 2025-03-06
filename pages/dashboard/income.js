@@ -2,31 +2,31 @@ import { useEffect, useState } from "react";
 import Table from "@/components/Table/Table";
 import { useStateContext } from "@/context/StateContext";
 
-
 export default function Income() {
   const { setLinkToken } = useStateContext();
+  const { user } = useStateContext();
 
   useEffect(() => {
-      const oldLinkToken = JSON.parse(localStorage.getItem("linkToken"))
+    if (user) {
+      const oldLinkToken = JSON.parse(localStorage.getItem("linkToken"));
 
-      if (!oldLinkToken || new Date() >= new Date(oldLinkToken.expiration)){
-          const fetchData = async () => {
-              try {
-                  const response = await fetch("/api/createToken");
-                  const tokenData = await response.json()
-                  localStorage.setItem("linkToken", JSON.stringify(tokenData));
-                  setLinkToken(JSON.stringify(tokenData).link_token)
-              } catch (err) {
-                  console.log(err)
-              }
+      if (!oldLinkToken || new Date() >= new Date(oldLinkToken.expiration)) {
+        const fetchData = async () => {
+          try {
+            const response = await fetch("/api/createToken");
+            const tokenData = await response.json();
+            localStorage.setItem("linkToken", JSON.stringify(tokenData));
+            setLinkToken(JSON.stringify(tokenData).link_token);
+          } catch (err) {
+            console.log(err);
           }
-          fetchData();
+        };
+        fetchData();
       } else {
-          setLinkToken(oldLinkToken.link_token)
+        setLinkToken(oldLinkToken.link_token);
       }
-  }, [])
+    }
+  }, [user]);
 
-  return (
-    <Table expense={false}/>
-  );
+  return <Table expense={false} />;
 }

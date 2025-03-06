@@ -1,45 +1,18 @@
 import styled from "styled-components";
+import { useStateContext } from "@/context/StateContext";
 export default function TransactionTable() {
-  const headers = [
-    { id: 1, label: "Name" },
-    { id: 2, label: "Account" },
-    { id: 3, label: "Amount" },
-  ];
+  const { transactions } = useStateContext();
 
   return (
     <StyledTable>
       <tbody>
-        <Tr>
-          <Td>Uber</Td>
-          <Td>Well's Fargo Checking</Td>
-          <Td>$36.55</Td>
-        </Tr>
-        <Tr>
-          <Td>Starbucks</Td>
-          <Td>Chase Savings</Td>
-          <Td>$4.25</Td>
-        </Tr>
-        <Tr>
-          <Td>Amazon</Td>
-          <Td>Bank of America</Td>
-          <Td>$120.99</Td>
-        </Tr>
-        <Tr>
-          <Td>Uber</Td>
-          <Td>Well's Fargo Checking</Td>
-          <Td>$36.55</Td>
-        </Tr>
-        <Tr>
-          <Td>Starbucks</Td>
-          <Td>Chase Savings</Td>
-          <Td>$4.25</Td>
-        </Tr>
-        <Tr>
-          <Td>Amazon</Td>
-          <Td>Bank of America</Td>
-          <Td>$120.99</Td>
-        </Tr>
-        
+        {transactions.map((t) => (
+          <Tr key={t.transaction_id}>
+            <Td>{t.name}</Td>
+            <Td>${t.amount.toFixed(2)}</Td>
+            <Td>{t.date}</Td>
+          </Tr>
+        ))}
       </tbody>
     </StyledTable>
   );

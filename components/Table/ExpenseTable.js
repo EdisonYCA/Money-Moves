@@ -1,22 +1,8 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { getExpenses } from "@/backend/Database";
+import { useStateContext } from "@/context/StateContext";
 
 export default function ExpenseTable() {
-  const [expenseArr, setExpenses] = useState([]);
-
-  useEffect(() => {
-    const getExpenseArr = async () => {
-      try {
-        const expenseArr = await getExpenses();
-        setExpenses(expenseArr);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getExpenseArr();
-  }, []);
+  const {expenseArr} = useStateContext();
 
   return (
     <StyledTable>

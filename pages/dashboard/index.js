@@ -4,16 +4,25 @@ import SideNavBar from "@/components/Dashboard/SideNavBar";
 import { useRouter } from "next/router";
 import { useStateContext } from "@/context/StateContext";
 import { useEffect } from "react";
-import { Title } from "chart.js";
 import TransactionTable from "@/components/Table/TransactionTable";
 import ExpenseTable from "@/components/Table/ExpenseTable";
 import { expenseContainerData } from "@/library/expenseContainerData";
 import { useState } from "react";
 import { getSalary, getSavingsRate } from "@/backend/Database";
+import { getTransactionData } from "@/library/transactionData";
+import { SeeAll } from "@/components/Dashboard/SeeAllButton";
+import { getExpenses } from "@/backend/Database";
 
 export default function Dashboard() {
-  const { user, salary, savingsRate, setSalary, setSavingsRate } =
-    useStateContext();
+  const {
+    user,
+    salary,
+    savingsRate,
+    setSalary,
+    setSavingsRate,
+    setTransactions,
+    setExpenses
+  } = useStateContext();
   const router = useRouter();
   const [moneyOverview, setMoneyOverview] = useState(
     expenseContainerData.map(([color, title, amount], i) => (
@@ -38,7 +47,24 @@ export default function Dashboard() {
       )
     );
 
+    const fetchTransactions = async () => {
+      const data = await getTransactionData();
+      setTransactions(data || []);
+    };
+
+    const getExpenseArr = async () => {
+      try {
+        const expenseArr = await getExpenses();
+        setExpenses(expenseArr);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getExpenseArr();
+    fetchTransactions();
     setMoneyOverview(updatedExpenseData);
+
   }, [user, salary, savingsRate]);
 
   return (
@@ -68,21 +94,18 @@ export default function Dashboard() {
               <Header>Transactions</Header>
             </HeaderContainer>
             <TransactionTable />
-            <ButtonContainer>
-              <AddAccount
-                onClick={() => {
-                  router.push("/dashboard/transactions");
-                }}
-              >
-                View All Transactions
-              </AddAccount>
-            </ButtonContainer>
+            <SeeAll
+              text={"Transactions"}
+              routeTo={"/dashboard/transactions"}
+              isExpense={false}
+            />
           </TransactionsContainer>
           <TransactionsContainer>
             <HeaderContainer>
               <Header>Upcoming Expenses</Header>
             </HeaderContainer>
             <ExpenseTable />
+            <SeeAll text={"Expenses"} routeTo={"/dashboard/expenses"} />
           </TransactionsContainer>
         </TransactionsAndBills>
       </MainContentContainer>
@@ -230,32 +253,4 @@ const ExpenseHeader = styled.p`
 
 const ExpenseText = styled.p`
   color: ${(props) => (props.color ? props.color : "white")};
-`;
-
-const ButtonContainer = styled.div`
-  margin: 20px 0 10px 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const AddAccount = styled.button`
-  color: white;
-  background-color: #248232;
-  width: 70%;
-  height: 40px;
-  font-size: 15px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-
-  &:hover {
-    background-color: #1d6829;
-    transform: scale(1.05);
-  }
-
-  &:active {
-    transform: scale(0.95);
-  }
 `;

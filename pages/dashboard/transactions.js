@@ -1,23 +1,10 @@
 import styled from "styled-components";
 import { GoBackButton } from "@/components/Page Navigation/GoBackButton";
-import { useEffect, useState } from "react";
-import { getTransactionData } from "@/library/transactionData";
 import { headers } from "@/library/transactionTableHeaders";
 import { useStateContext } from "@/context/StateContext";
 
 export default function transactions() {
-  const { user } = useStateContext();
-  const [transactions, setTransactions] = useState([]);
-
-  useEffect(() => {
-    if (user) {
-      const fetchTransactions = async () => {
-        const data = await getTransactionData();
-        setTransactions(data || []);
-      };
-      fetchTransactions();
-    }
-  }, [user]);
+  const { transactions } = useStateContext();
 
   return (
     <PageContainer>

@@ -35,7 +35,6 @@ export default function Table({ expense }) {
     };
 
     getExpenseArr();
-    getTransactionData();
 
   }, [user, isModalOpen])
 
