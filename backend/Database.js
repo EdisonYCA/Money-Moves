@@ -221,6 +221,7 @@ export async function updateTransactions() {
   }
 }
 
+
 export const getCurrentUser = () => {
   const user = auth.currentUser;
   return user ? user.uid : null;

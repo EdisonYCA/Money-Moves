@@ -7,6 +7,7 @@ import { GoBackButton } from "../Page Navigation/GoBackButton";
 import { updateExpenses, getExpenses } from "@/backend/Database";
 import { useStateContext } from "@/context/StateContext";
 import { getTransactionData } from "@/library/transactionData";
+import { getAccounts } from "@/backend/Database";
 
 export default function Table({ expense }) {
   const headers = expense ? expenseHeaders : accountHeaders;
@@ -15,6 +16,7 @@ export default function Table({ expense }) {
   const [amount, setAmount] = useState(0);
   const [dueDate, setDueDate] = useState(null);
   const [expenseArr, setExpenses] = useState([]);
+  const [userAccounts, setUserAccounts] = useState([]);
   const { user } = useStateContext();
 
   const saveExpense = () =>
@@ -24,19 +26,47 @@ export default function Table({ expense }) {
       date: new Date(dueDate),
     });
 
-  useEffect (() => {
-    const getExpenseArr = async () => {
-      try {
-        const expenseArr = await getExpenses();
-        setExpenses(expenseArr);
-      } catch (err) {
-        console.log(err);
+  useEffect(() => {
+    const firstLoad = localStorage.getItem("firstLoad");
+
+    if (firstLoad) {
+      if (expense) {
+        const getExpenseArr = async () => {
+          try {
+            const expenseArr = await getExpenses();
+            setExpenses(expenseArr);
+          } catch (err) {
+            console.log(err);
+          }
+        };
+        getExpenseArr();
+      } else {
+        const getAccountsArr = async () => {
+          try {
+            const accessTokens = await getAccounts();
+
+            for (const acc of accessTokens) {
+              const accInfoResponse = await fetch("/api/getAccountInfo", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ access_token: acc.access_token }),
+              });
+              const accInfo = await accInfoResponse.json();
+              console.log(accInfo.accounts);
+              setUserAccounts(accInfo.accounts);
+              console.log(userAccounts);
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        };
+
+        getAccountsArr();
       }
-    };
-
-    getExpenseArr();
-
-  }, [user, isModalOpen])
+    } else {
+      localStorage.setItem("firstLoad", "false");
+    }
+  }, [isModalOpen]);
 
   return (
     <PageContainer>
@@ -52,16 +82,28 @@ export default function Table({ expense }) {
             </tr>
           </thead>
           <tbody>
-
-            {expense ? expenseArr.map((expenseObj, i) => (
-              <Tr key={i}>
-                <Td>{expenseObj.expense_name}</Td>
-                <Td>${expenseObj.amount}</Td>
-                <Td>{new Date(expenseObj.date.seconds * 1000).toLocaleDateString()}</Td>
-              </Tr>
-            )) : <Tr>
-              </Tr>}
-
+            {expense ? (
+              expenseArr.map((expenseObj, i) => (
+                <Tr key={i}>
+                  <Td>{expenseObj.expense_name}</Td>
+                  <Td>${expenseObj.amount}</Td>
+                  <Td>
+                    {new Date(
+                      expenseObj.date.seconds * 1000
+                    ).toLocaleDateString()}
+                  </Td>
+                </Tr>
+              ))
+            ) : (
+              // userAccounts.map((accountObj, i) => (
+              //   <Tr key={i}>
+              //     <Td>{accountObj.name}</Td>
+              //     <Td>${accountObj.balance}</Td>
+              //     <Td>{accountObj.subtype}</Td>
+              //   </Tr>
+              // ))
+              <></>
+            )}
           </tbody>
         </StyledTable>
         {!expense && <Link />}
