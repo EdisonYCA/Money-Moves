@@ -12,7 +12,7 @@ export function StateContext({children}){
     const [linkToken, setLinkToken] = useState(null);
     const [transactions, setTransactions] = useState([]);
     const [expenseArr, setExpenses] = useState([]);
-
+    const [accounts, setAccounts] = useState([]);
 
 
     // useEffect(() => {
@@ -30,7 +30,7 @@ export function StateContext({children}){
     return (
         <Context.Provider value={{user, setUser, linkToken, setLinkToken, salary, 
         setSalary, savingsRate, setSavingsRate, transactions, setTransactions,
-        expenseArr, setExpenses}}> 
+        expenseArr, setExpenses, accounts, setAccounts}}> 
             {children}
         </Context.Provider>
     );
