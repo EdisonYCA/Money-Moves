@@ -34,6 +34,7 @@ export async function getUserData() {
 
 export async function getExpenses() {
   try {
+    console.log(getCurrentUser())
     const docSnap = await getDoc(doc(db, "users", getCurrentUser()));
     if (docSnap.exists()) {
       return docSnap.data().expenses;

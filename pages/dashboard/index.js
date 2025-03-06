@@ -25,7 +25,8 @@ export default function Dashboard() {
     firstLoad,
     setFirstLoad,
     moneyOverview, 
-    setMoneyOverview
+    setMoneyOverview,
+    accounts
   } = useStateContext();
   const router = useRouter();
 
