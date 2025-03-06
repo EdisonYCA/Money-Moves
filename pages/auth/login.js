@@ -66,7 +66,7 @@ export default function login(){
                             </InputContainer>
                             <InputContainer>
                                 <Icon src="/48-lock-2.svg"></Icon>
-                                <Input type="text" placeholder="Enter your Password" required onChange={(p) => {setUserPassword(p.target.value)}}/>
+                                <Input type="password" placeholder="Enter your Password" required onChange={(p) => {setUserPassword(p.target.value)}}/>
                             </InputContainer>
                             <SignUpBtn onClick={handleLogIn}>Log In</SignUpBtn>
                         </Form>

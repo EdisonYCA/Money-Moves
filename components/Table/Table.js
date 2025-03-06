@@ -31,6 +31,7 @@ export default function Table({ expense }) {
       } else {
         const getAccountsArr = async () => {
           try {
+            let allAccounts = []
             const accessTokens = await getAccounts();
 
             for (const acc of accessTokens) {
@@ -40,8 +41,9 @@ export default function Table({ expense }) {
                 body: JSON.stringify({ access_token: acc.access_token }),
               });
               const accInfo = await accInfoResponse.json();
-              setAccounts(accInfo.accounts);
+              allAccounts.push(...accInfo.accounts);
             }
+            setAccounts(allAccounts)
           } catch (err) {
             console.log(err);
           }
@@ -84,7 +86,7 @@ export default function Table({ expense }) {
                   <Tr key={i}>
                     <Td>{accountObj.name}</Td>
                     <Td>${accountObj.balance}</Td>
-                    <Td>{accountObj.subtype}</Td>
+                    <Td>{accountObj.subtype.toUpperCase()}</Td>
                   </Tr>
                 ))}
           </tbody>
