@@ -66,9 +66,11 @@ export default function Dashboard() {
   const updateMoneyOverview = (expenseArr, salary, savingsRate) => {
     let expensesAmount = 0;
 
-    expenseArr.array.forEach(element => {
-      expenseAmount += element.amount
-    });
+    if(expenseArr){
+      expenseArr.array.forEach(element => {
+        expenseAmount += element.amount
+      });
+    }
   
     const expenseContainerData = [
       ["#1d6829", "Monthly Income", `$${(salary / 12 / 1000).toFixed(1)}k`],
