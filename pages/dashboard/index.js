@@ -66,9 +66,9 @@ export default function Dashboard() {
   const updateMoneyOverview = (expenseArr, salary, savingsRate) => {
     let expensesAmount = 0;
 
-    if(expenseArr){
-      expenseArr.array.forEach(element => {
-        expenseAmount += element.amount
+    if (expenseArr && Array.isArray(expenseArr)) {
+      expenseArr.forEach(element => {
+        expenseAmount += element.amount;
       });
     }
   
