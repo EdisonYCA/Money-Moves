@@ -70,7 +70,7 @@ export default function Table({ expense }) {
             </tr>
           </thead>
           <tbody>
-            {expense
+            {expense && Array.isArray(expenseArr)
               ? expenseArr.map((expenseObj, i) => (
                   <Tr key={i}>
                     <Td>{expenseObj.expense_name}</Td>
@@ -82,13 +82,13 @@ export default function Table({ expense }) {
                     </Td>
                   </Tr>
                 ))
-              : accounts.map((accountObj, i) => (
+              : Array.isArray(accounts) ? accounts.map((accountObj, i) => (
                   <Tr key={i}>
                     <Td>{accountObj.name}</Td>
                     <Td>${accountObj.balance}</Td>
                     <Td>{accountObj.subtype.toUpperCase()}</Td>
                   </Tr>
-                ))}
+                )) : null}
           </tbody>
         </StyledTable>
         {!expense && <Link />}
